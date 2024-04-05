@@ -148,8 +148,9 @@
 			tbId.BackColor = SystemColors.ActiveBorder;
 			tbId.Location = new Point(112, 89);
 			tbId.Name = "tbId";
-			tbId.Size = new Size(34, 25);
+			tbId.Size = new Size(100, 25);
 			tbId.TabIndex = 15;
+			tbId.TextChanged += tbId_TextChanged;
 			// 
 			// label8
 			// 
@@ -275,6 +276,7 @@
 			label1.TabIndex = 0;
 			label1.Text = resources.GetString("label1.Text");
 			label1.TextAlign = ContentAlignment.MiddleCenter;
+			label1.Click += label1_Click;
 			// 
 			// btnAnterior
 			// 

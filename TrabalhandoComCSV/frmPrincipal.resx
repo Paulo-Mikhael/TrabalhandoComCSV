@@ -121,7 +121,7 @@
   <data name="btnSalvar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        qgAAAKoBBgpwTwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAF8SURBVEhL7ZO9
+        qAAAAKgBefSzxgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAF8SURBVEhL7ZO9
         SwJxHIf9W5oSgqKlQkHo7WhqryEicIhelmoTTBctHXoZW4uyaCmkMaQstaHyBV/O7q28U8rrzjiFim93
         cgl5vt1R0OAHnu2+z/NbTteeqo25hX7EVdxDXCVP9xIW71pEqUk3nj3yPQqNODzHC8h6aU7W1B/iLu6K
         AZDQzyegwxwG81YSMjSj4CpCw8QmBTPbGATu0+UbZE1wyqraEz86aDVwFspAn4WEURtaCQw5ODDanz2y
@@ -138,15 +138,15 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIJSURBVFhHYxhSIDQ0lFm7xlBTt84gUq/GqFO31nCnXpX+
-        c90ag3VQJdQDesV63Dq1hpZ61UaZetUGM4Hsk5oVul/1ao3+Y8NQbeQBoyojSd1aA0+gryqB9ErtGqOb
-        ehVGf7FZhAtDjSId6NUaTMFmIKkYahzpAJth5OA37z+SjF+/+7hjQB0AwqMOoJoDLPps4DhrZR7cAhAb
+        c90ag3VQJdQDesV63Dq1hpZ61UaZetUGM4Hsk2pFal/1ao3+Y8NQbeQBoyojSd1aA0+gryqB9ErtGqOb
+        evlGf7FZhAtDjSId6NUaTMFmIKkYahzpAJth5OA37z+SjF+/+7hjQB0AwqMOoJoDLPps4DhrZR7cAhAb
         mzgMk+QA8ybr/6funv5/4NpBDDmqOmDf1f3/T9459d+qxQ5FfMv5rf9//fr1/9z98yjiIIxuMLEYqwPO
         3DsLtujYreP/jRvMwWLtmzvBYh++fPjvOyEQQw82w4nBWB3g2u35/+nbZ2ALN57d/D9+dtL/bz++gfkF
         y4ox1IMwVaMAhEOnRgB9+xFs6ZfvX8H0nIPzsKoFYao7AIRzFueBLQbhK4+v/jeoM8GqDoTRDSYW43XA
         nANz4Q748fPH/4yF2VjVgTA2w4nBOB1QsLQIbPH3H9//b72wHcwGRQkoarCpp2oUgFL5+8/vwZZ2bOkC
         i204uwnMf/buGTiRouuhqgNA+Rxk2Zbz2+BioOx49NYxsDgomyKrB2F0g4nFWB1w6MZhsGWgkg9ZHFQw
         Hb99AmtJiM1wYjDeREgKpmoUkIMH3AHoBhOLRx0woA6ANkoHuFkOAgPaMcEF6No1IxZg7ZzWGr7QrTHc
-        AlUy1AADAwDulh2PgpAe7wAAAABJRU5ErkJggg==
+        AlUy1AADAwBWah1dCzQyHAAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

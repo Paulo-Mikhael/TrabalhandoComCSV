@@ -54,10 +54,9 @@
 			tsFerramentas = new ToolStrip();
 			btnPlanilha = new ToolStripButton();
 			toolStripSeparator1 = new ToolStripSeparator();
-			btnCsv = new ToolStripButton();
-			btnXlsx = new ToolStripButton();
-			toolStripSeparator2 = new ToolStripSeparator();
 			toolStripSeparator3 = new ToolStripSeparator();
+			btnCsv = new ToolStripButton();
+			toolStripSeparator2 = new ToolStripSeparator();
 			tsFerramentas.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -65,7 +64,7 @@
 			// 
 			label1.AutoSize = true;
 			label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-			label1.Location = new Point(217, 71);
+			label1.Location = new Point(218, 71);
 			label1.Name = "label1";
 			label1.Size = new Size(280, 37);
 			label1.TabIndex = 0;
@@ -140,7 +139,8 @@
 			tbId.Location = new Point(137, 162);
 			tbId.Name = "tbId";
 			tbId.Size = new Size(100, 25);
-			tbId.TabIndex = 2;
+			tbId.TabIndex = 0;
+			tbId.TabStop = false;
 			// 
 			// tbNome
 			// 
@@ -156,7 +156,7 @@
 			tbEndereco.Location = new Point(137, 298);
 			tbEndereco.Name = "tbEndereco";
 			tbEndereco.Size = new Size(324, 25);
-			tbEndereco.TabIndex = 2;
+			tbEndereco.TabIndex = 4;
 			// 
 			// tbBairro
 			// 
@@ -164,7 +164,7 @@
 			tbBairro.Location = new Point(137, 332);
 			tbBairro.Name = "tbBairro";
 			tbBairro.Size = new Size(324, 25);
-			tbBairro.TabIndex = 2;
+			tbBairro.TabIndex = 5;
 			// 
 			// tbMunicipio
 			// 
@@ -172,7 +172,7 @@
 			tbMunicipio.Location = new Point(137, 366);
 			tbMunicipio.Name = "tbMunicipio";
 			tbMunicipio.Size = new Size(324, 25);
-			tbMunicipio.TabIndex = 2;
+			tbMunicipio.TabIndex = 6;
 			// 
 			// label9
 			// 
@@ -207,7 +207,7 @@
 			tbEstado.Location = new Point(547, 366);
 			tbEstado.Name = "tbEstado";
 			tbEstado.Size = new Size(107, 25);
-			tbEstado.TabIndex = 2;
+			tbEstado.TabIndex = 9;
 			// 
 			// mtbCpf
 			// 
@@ -216,7 +216,7 @@
 			mtbCpf.Mask = "999,999,999-99";
 			mtbCpf.Name = "mtbCpf";
 			mtbCpf.Size = new Size(100, 25);
-			mtbCpf.TabIndex = 3;
+			mtbCpf.TabIndex = 1;
 			// 
 			// mtbNumero
 			// 
@@ -225,8 +225,7 @@
 			mtbNumero.Mask = "(99) 99999-9999";
 			mtbNumero.Name = "mtbNumero";
 			mtbNumero.Size = new Size(107, 25);
-			mtbNumero.TabIndex = 3;
-			mtbNumero.MaskInputRejected += mtbNumero_MaskInputRejected;
+			mtbNumero.TabIndex = 7;
 			// 
 			// mtbCep
 			// 
@@ -235,7 +234,7 @@
 			mtbCep.Mask = "99,999-999";
 			mtbCep.Name = "mtbCep";
 			mtbCep.Size = new Size(107, 25);
-			mtbCep.TabIndex = 3;
+			mtbCep.TabIndex = 8;
 			// 
 			// cdSexo
 			// 
@@ -246,7 +245,7 @@
 			cdSexo.Location = new Point(137, 264);
 			cdSexo.Name = "cdSexo";
 			cdSexo.Size = new Size(194, 25);
-			cdSexo.TabIndex = 4;
+			cdSexo.TabIndex = 3;
 			// 
 			// btnSalvar
 			// 
@@ -258,7 +257,7 @@
 			btnSalvar.Location = new Point(336, 447);
 			btnSalvar.Name = "btnSalvar";
 			btnSalvar.Size = new Size(96, 45);
-			btnSalvar.TabIndex = 5;
+			btnSalvar.TabIndex = 10;
 			btnSalvar.Text = "Salvar";
 			btnSalvar.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnSalvar.UseVisualStyleBackColor = false;
@@ -266,11 +265,11 @@
 			// 
 			// tsFerramentas
 			// 
-			tsFerramentas.Items.AddRange(new ToolStripItem[] { btnPlanilha, toolStripSeparator1, toolStripSeparator3, btnCsv, btnXlsx, toolStripSeparator2 });
+			tsFerramentas.Items.AddRange(new ToolStripItem[] { btnPlanilha, toolStripSeparator1, toolStripSeparator3, btnCsv, toolStripSeparator2 });
 			tsFerramentas.Location = new Point(0, 0);
 			tsFerramentas.Name = "tsFerramentas";
 			tsFerramentas.Size = new Size(739, 54);
-			tsFerramentas.TabIndex = 6;
+			tsFerramentas.TabIndex = 0;
 			tsFerramentas.Text = "toolStrip1";
 			// 
 			// btnPlanilha
@@ -290,44 +289,31 @@
 			toolStripSeparator1.Name = "toolStripSeparator1";
 			toolStripSeparator1.Size = new Size(6, 54);
 			// 
+			// toolStripSeparator3
+			// 
+			toolStripSeparator3.Alignment = ToolStripItemAlignment.Right;
+			toolStripSeparator3.Name = "toolStripSeparator3";
+			toolStripSeparator3.Size = new Size(6, 54);
+			// 
 			// btnCsv
 			// 
 			btnCsv.Alignment = ToolStripItemAlignment.Right;
 			btnCsv.BackgroundImageLayout = ImageLayout.None;
 			btnCsv.ForeColor = SystemColors.ActiveCaptionText;
-			btnCsv.Image = Properties.Resources.csv_32px;
+			btnCsv.Image = Properties.Resources.configuracao;
 			btnCsv.ImageScaling = ToolStripItemImageScaling.None;
 			btnCsv.ImageTransparentColor = Color.Magenta;
 			btnCsv.Name = "btnCsv";
-			btnCsv.Size = new Size(118, 51);
-			btnCsv.Text = "Mudar diretório CSV";
+			btnCsv.Size = new Size(88, 51);
+			btnCsv.Text = "Configurações";
 			btnCsv.TextImageRelation = TextImageRelation.ImageAboveText;
-			// 
-			// btnXlsx
-			// 
-			btnXlsx.Alignment = ToolStripItemAlignment.Right;
-			btnXlsx.BackgroundImageLayout = ImageLayout.None;
-			btnXlsx.ForeColor = SystemColors.ActiveCaptionText;
-			btnXlsx.Image = Properties.Resources.excel;
-			btnXlsx.ImageScaling = ToolStripItemImageScaling.None;
-			btnXlsx.ImageTransparentColor = Color.Magenta;
-			btnXlsx.Name = "btnXlsx";
-			btnXlsx.Size = new Size(118, 51);
-			btnXlsx.Text = "Mudar diretório Xlsx";
-			btnXlsx.TextImageRelation = TextImageRelation.ImageAboveText;
-			btnXlsx.ToolTipText = "Mudar diretório Xlsx (Planilha)";
+			btnCsv.ToolTipText = "Configure os diretórios da planilha e CSV onde deseja salvar os dados";
 			// 
 			// toolStripSeparator2
 			// 
 			toolStripSeparator2.Alignment = ToolStripItemAlignment.Right;
 			toolStripSeparator2.Name = "toolStripSeparator2";
 			toolStripSeparator2.Size = new Size(6, 54);
-			// 
-			// toolStripSeparator3
-			// 
-			toolStripSeparator3.Alignment = ToolStripItemAlignment.Right;
-			toolStripSeparator3.Name = "toolStripSeparator3";
-			toolStripSeparator3.Size = new Size(6, 54);
 			// 
 			// frmPrincipal
 			// 
@@ -365,6 +351,7 @@
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Cadastro de dados";
 			Load += frmPrincipal_Load;
+			KeyDown += frmPrincipal_KeyPress;
 			tsFerramentas.ResumeLayout(false);
 			tsFerramentas.PerformLayout();
 			ResumeLayout(false);
@@ -399,7 +386,6 @@
 		private ToolStripButton btnPlanilha;
 		private ToolStripSeparator toolStripSeparator1;
 		private ToolStripButton btnCsv;
-		private ToolStripButton btnXlsx;
 		private ToolStripSeparator toolStripSeparator3;
 		private ToolStripSeparator toolStripSeparator2;
 	}
