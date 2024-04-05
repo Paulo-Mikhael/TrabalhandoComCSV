@@ -16,8 +16,13 @@ namespace TrabalhandoComCSV
 
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
+			var frmPlanilha = new frmPlanilha();
+
+			btnSalvar.Enabled = false;
 			SalvarClienteCsv();
 			LimparForm();
+			btnSalvar.Enabled = true;
+			frmPlanilha.CarregaDadosCsvPlanilha();
 		}
 
 		private void SalvarClienteCsv()

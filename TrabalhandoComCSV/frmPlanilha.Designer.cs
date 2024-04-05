@@ -49,7 +49,6 @@
 			label4 = new Label();
 			label3 = new Label();
 			label2 = new Label();
-			btnAbrir = new Button();
 			btnSalvar = new Button();
 			lblStatus = new Label();
 			label1 = new Label();
@@ -60,6 +59,9 @@
 			btnPrimeiro = new Button();
 			label12 = new Label();
 			tbLinha = new TextBox();
+			lblTotal = new Label();
+			btnAviso = new Button();
+			btnAbrir = new Button();
 			SuspendLayout();
 			// 
 			// cdSexo
@@ -107,6 +109,7 @@
 			tbNome.Name = "tbNome";
 			tbNome.Size = new Size(517, 25);
 			tbNome.TabIndex = 19;
+			tbNome.TextChanged += tbNome_TextChanged;
 			// 
 			// tbMunicipio
 			// 
@@ -145,7 +148,7 @@
 			tbId.BackColor = SystemColors.ActiveBorder;
 			tbId.Location = new Point(112, 89);
 			tbId.Name = "tbId";
-			tbId.Size = new Size(100, 25);
+			tbId.Size = new Size(34, 25);
 			tbId.TabIndex = 15;
 			// 
 			// label8
@@ -238,21 +241,6 @@
 			label2.TabIndex = 5;
 			label2.Text = "ID:";
 			// 
-			// btnAbrir
-			// 
-			btnAbrir.BackColor = Color.DarkOrchid;
-			btnAbrir.FlatAppearance.BorderSize = 2;
-			btnAbrir.FlatStyle = FlatStyle.Flat;
-			btnAbrir.ImageAlign = ContentAlignment.MiddleRight;
-			btnAbrir.Location = new Point(152, 449);
-			btnAbrir.Name = "btnAbrir";
-			btnAbrir.Size = new Size(96, 37);
-			btnAbrir.TabIndex = 25;
-			btnAbrir.Text = "Atualizar";
-			btnAbrir.TextImageRelation = TextImageRelation.ImageBeforeText;
-			btnAbrir.UseVisualStyleBackColor = false;
-			btnAbrir.Click += btnAbrir_Click;
-			// 
 			// btnSalvar
 			// 
 			btnSalvar.BackColor = Color.DarkOrchid;
@@ -281,10 +269,10 @@
 			// 
 			label1.AutoSize = true;
 			label1.ForeColor = Color.Yellow;
-			label1.Location = new Point(34, 14);
+			label1.Location = new Point(16, 14);
 			label1.Name = "label1";
 			label1.Size = new Size(600, 51);
-			label1.TabIndex = 5;
+			label1.TabIndex = 0;
 			label1.Text = resources.GetString("label1.Text");
 			label1.TextAlign = ContentAlignment.MiddleCenter;
 			// 
@@ -324,7 +312,7 @@
 			btnExcluir.FlatAppearance.BorderSize = 2;
 			btnExcluir.FlatStyle = FlatStyle.Flat;
 			btnExcluir.ImageAlign = ContentAlignment.MiddleRight;
-			btnExcluir.Location = new Point(533, 342);
+			btnExcluir.Location = new Point(292, 449);
 			btnExcluir.Name = "btnExcluir";
 			btnExcluir.Size = new Size(96, 37);
 			btnExcluir.TabIndex = 25;
@@ -377,15 +365,63 @@
 			tbLinha.BackColor = SystemColors.ActiveBorder;
 			tbLinha.Location = new Point(90, 359);
 			tbLinha.Name = "tbLinha";
-			tbLinha.Size = new Size(56, 25);
+			tbLinha.Size = new Size(45, 25);
 			tbLinha.TabIndex = 15;
 			tbLinha.TextAlign = HorizontalAlignment.Center;
+			// 
+			// lblTotal
+			// 
+			lblTotal.AutoSize = true;
+			lblTotal.ForeColor = SystemColors.ActiveCaptionText;
+			lblTotal.Location = new Point(141, 362);
+			lblTotal.Name = "lblTotal";
+			lblTotal.Size = new Size(25, 17);
+			lblTotal.TabIndex = 5;
+			lblTotal.Text = "/ 7";
+			// 
+			// btnAviso
+			// 
+			btnAviso.BackColor = Color.Sienna;
+			btnAviso.BackgroundImage = Properties.Resources.aviso_hover;
+			btnAviso.BackgroundImageLayout = ImageLayout.Stretch;
+			btnAviso.Cursor = Cursors.Hand;
+			btnAviso.FlatAppearance.BorderSize = 0;
+			btnAviso.FlatAppearance.MouseDownBackColor = Color.Sienna;
+			btnAviso.FlatAppearance.MouseOverBackColor = Color.Sienna;
+			btnAviso.FlatStyle = FlatStyle.Flat;
+			btnAviso.ForeColor = Color.Violet;
+			btnAviso.Location = new Point(619, 23);
+			btnAviso.Name = "btnAviso";
+			btnAviso.Size = new Size(37, 37);
+			btnAviso.TabIndex = 0;
+			btnAviso.TabStop = false;
+			btnAviso.UseVisualStyleBackColor = false;
+			btnAviso.Click += btnAviso_Click;
+			btnAviso.MouseEnter += btnAviso_MouseEnter;
+			btnAviso.MouseLeave += btnAviso_MouseLeave;
+			btnAviso.MouseHover += btnAviso_MouseHover;
+			// 
+			// btnAbrir
+			// 
+			btnAbrir.BackColor = Color.DarkOrchid;
+			btnAbrir.FlatAppearance.BorderSize = 2;
+			btnAbrir.FlatStyle = FlatStyle.Flat;
+			btnAbrir.ImageAlign = ContentAlignment.MiddleRight;
+			btnAbrir.Location = new Point(152, 449);
+			btnAbrir.Name = "btnAbrir";
+			btnAbrir.Size = new Size(96, 37);
+			btnAbrir.TabIndex = 25;
+			btnAbrir.Text = "Atualizar";
+			btnAbrir.TextImageRelation = TextImageRelation.ImageBeforeText;
+			btnAbrir.UseVisualStyleBackColor = false;
+			btnAbrir.Click += btnAbrir_Click;
 			// 
 			// frmPlanilha
 			// 
 			AutoScaleMode = AutoScaleMode.None;
 			BackColor = Color.Sienna;
-			ClientSize = new Size(668, 515);
+			ClientSize = new Size(668, 502);
+			Controls.Add(btnAviso);
 			Controls.Add(btnSalvar);
 			Controls.Add(btnProximo);
 			Controls.Add(btnPrimeiro);
@@ -414,6 +450,7 @@
 			Controls.Add(label4);
 			Controls.Add(label3);
 			Controls.Add(label1);
+			Controls.Add(lblTotal);
 			Controls.Add(label12);
 			Controls.Add(lblStatus);
 			Controls.Add(label2);
@@ -452,7 +489,6 @@
 		private Label label4;
 		private Label label3;
 		private Label label2;
-		private Button btnAbrir;
 		private Button btnSalvar;
 		private Label lblStatus;
 		private Label label1;
@@ -463,5 +499,8 @@
 		private Button btnPrimeiro;
 		private Label label12;
 		private TextBox tbLinha;
+		private Label lblTotal;
+		private Button btnAviso;
+		private Button btnAbrir;
 	}
 }

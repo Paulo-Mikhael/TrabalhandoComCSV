@@ -53,6 +53,11 @@
 			btnSalvar = new Button();
 			tsFerramentas = new ToolStrip();
 			btnPlanilha = new ToolStripButton();
+			toolStripSeparator1 = new ToolStripSeparator();
+			btnCsv = new ToolStripButton();
+			btnXlsx = new ToolStripButton();
+			toolStripSeparator2 = new ToolStripSeparator();
+			toolStripSeparator3 = new ToolStripSeparator();
 			tsFerramentas.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -261,7 +266,7 @@
 			// 
 			// tsFerramentas
 			// 
-			tsFerramentas.Items.AddRange(new ToolStripItem[] { btnPlanilha });
+			tsFerramentas.Items.AddRange(new ToolStripItem[] { btnPlanilha, toolStripSeparator1, toolStripSeparator3, btnCsv, btnXlsx, toolStripSeparator2 });
 			tsFerramentas.Location = new Point(0, 0);
 			tsFerramentas.Name = "tsFerramentas";
 			tsFerramentas.Size = new Size(739, 54);
@@ -279,6 +284,50 @@
 			btnPlanilha.Text = "Ler Planilha";
 			btnPlanilha.TextImageRelation = TextImageRelation.ImageAboveText;
 			btnPlanilha.Click += btnPlanilha_Click;
+			// 
+			// toolStripSeparator1
+			// 
+			toolStripSeparator1.Name = "toolStripSeparator1";
+			toolStripSeparator1.Size = new Size(6, 54);
+			// 
+			// btnCsv
+			// 
+			btnCsv.Alignment = ToolStripItemAlignment.Right;
+			btnCsv.BackgroundImageLayout = ImageLayout.None;
+			btnCsv.ForeColor = SystemColors.ActiveCaptionText;
+			btnCsv.Image = Properties.Resources.csv_32px;
+			btnCsv.ImageScaling = ToolStripItemImageScaling.None;
+			btnCsv.ImageTransparentColor = Color.Magenta;
+			btnCsv.Name = "btnCsv";
+			btnCsv.Size = new Size(118, 51);
+			btnCsv.Text = "Mudar diretório CSV";
+			btnCsv.TextImageRelation = TextImageRelation.ImageAboveText;
+			// 
+			// btnXlsx
+			// 
+			btnXlsx.Alignment = ToolStripItemAlignment.Right;
+			btnXlsx.BackgroundImageLayout = ImageLayout.None;
+			btnXlsx.ForeColor = SystemColors.ActiveCaptionText;
+			btnXlsx.Image = Properties.Resources.excel;
+			btnXlsx.ImageScaling = ToolStripItemImageScaling.None;
+			btnXlsx.ImageTransparentColor = Color.Magenta;
+			btnXlsx.Name = "btnXlsx";
+			btnXlsx.Size = new Size(118, 51);
+			btnXlsx.Text = "Mudar diretório Xlsx";
+			btnXlsx.TextImageRelation = TextImageRelation.ImageAboveText;
+			btnXlsx.ToolTipText = "Mudar diretório Xlsx (Planilha)";
+			// 
+			// toolStripSeparator2
+			// 
+			toolStripSeparator2.Alignment = ToolStripItemAlignment.Right;
+			toolStripSeparator2.Name = "toolStripSeparator2";
+			toolStripSeparator2.Size = new Size(6, 54);
+			// 
+			// toolStripSeparator3
+			// 
+			toolStripSeparator3.Alignment = ToolStripItemAlignment.Right;
+			toolStripSeparator3.Name = "toolStripSeparator3";
+			toolStripSeparator3.Size = new Size(6, 54);
 			// 
 			// frmPrincipal
 			// 
@@ -314,7 +363,7 @@
 			MaximizeBox = false;
 			Name = "frmPrincipal";
 			StartPosition = FormStartPosition.CenterScreen;
-			Text = "Comercial";
+			Text = "Cadastro de dados";
 			Load += frmPrincipal_Load;
 			tsFerramentas.ResumeLayout(false);
 			tsFerramentas.PerformLayout();
@@ -348,5 +397,10 @@
 		private Button btnSalvar;
 		private ToolStrip tsFerramentas;
 		private ToolStripButton btnPlanilha;
+		private ToolStripSeparator toolStripSeparator1;
+		private ToolStripButton btnCsv;
+		private ToolStripButton btnXlsx;
+		private ToolStripSeparator toolStripSeparator3;
+		private ToolStripSeparator toolStripSeparator2;
 	}
 }

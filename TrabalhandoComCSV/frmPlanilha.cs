@@ -25,7 +25,7 @@ namespace TrabalhandoComCSV
 		Excel.Application app = new Excel.Application();
 		Workbook pasta;
 		Worksheet plan;
-		string excelPath = @"C:\Users\Monica\Documents\TesteDadosCsv\TabelaClientes1.xlsx";
+		string excelPath = @"C:\Users\Monica\Documents\TesteDadosCsv\TabelaClientes.xlsx";
 		string csvPath = @"C:\Users\Monica\Documents\TesteDadosCsv\clientes.csv";
 		string planilha = "Planilha1";
 		int firstLine = 3;
@@ -83,7 +83,7 @@ namespace TrabalhandoComCSV
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message + "\r\n Possíveis causas: Planilha aberta no excel", "Erro");
+				MessageBox.Show(ex.Message, "Erro");
 			}
 		}
 
@@ -203,76 +203,92 @@ namespace TrabalhandoComCSV
 
 		private void LimparPlanilha()
 		{
-			using (var excelPackage = new ExcelPackage(new FileInfo(excelPath)))
+			try
 			{
-				var worksheet = excelPackage.Workbook.Worksheets[planilha];
+				var primeiraCelula = plan.Cells[firstLine, 1].Value;
 
-				for (int row = actualLine; row < lastLine + 1; row++)
+				if (primeiraCelula != null)
 				{
-					worksheet.Cells[row, 1].Value = "";
-					worksheet.Cells[row, 2].Value = "";
-					worksheet.Cells[row, 3].Value = "";
-					worksheet.Cells[row, 4].Value = "";
-					worksheet.Cells[row, 5].Value = "";
-					worksheet.Cells[row, 6].Value = "";
-					worksheet.Cells[row, 7].Value = "";
-					worksheet.Cells[row, 8].Value = "";
-					worksheet.Cells[row, 9].Value = "";
-					worksheet.Cells[row, 10].Value = "";
-				}
+					for (int i = firstLine; i < lastLine + 1; i++)
+					{
+						plan.Cells[i, 1].Value = "";
+						plan.Cells[i, 2].Value = "";
+						plan.Cells[i, 3].Value = "";
+						plan.Cells[i, 4].Value = "";
+						plan.Cells[i, 5].Value = "";
+						plan.Cells[i, 6].Value = "";
+						plan.Cells[i, 7].Value = "";
+						plan.Cells[i, 8].Value = "";
+						plan.Cells[i, 9].Value = "";
+						plan.Cells[i, 10].Value = "";
+					}
 
-				excelPackage.Save();
+					pasta.Save();
+					pasta.Close(true);
+
+					MessageBox.Show("Planilha limpa com sucesso", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Erro no método LimparPlanilha: {ex.Message}");
 			}
 		}
 
-		private void CarregaDadosCsvPlanilha()
+		public void CarregaDadosCsvPlanilha()
 		{
-			ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-			using (var excelPackage = new ExcelPackage(new FileInfo(excelPath)))
+			try
 			{
-				var worksheet = excelPackage.Workbook.Worksheets[planilha];
+				ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-				using (var reader = new StreamReader(csvPath))
-				using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+				using (var excelPackage = new ExcelPackage(new FileInfo(excelPath)))
 				{
-					csv.Read();
-					int row = actualLine;
-
-					while (csv.Read())
+					using (var reader = new StreamReader(csvPath))
+					using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
 					{
-						var id = csv.GetField<int>(0);
-						var cpf = csv.GetField<string>(1);
-						var nome = csv.GetField<string>(2);
-						var genero = csv.GetField<string>(3);
-						var endereco = csv.GetField<string>(4);
-						var telefone = csv.GetField<string>(5);
-						var bairro = csv.GetField<string>(6);
-						var cep = csv.GetField<string>(7);
-						var cidade = csv.GetField<string>(8);
-						var estado = csv.GetField<string>(9);
+						csv.Read();
+						int row = firstLine;
 
-						worksheet.Cells[row, 1].Value = id;
-						worksheet.Cells[row, 2].Value = cpf;
-						worksheet.Cells[row, 3].Value = nome;
-						worksheet.Cells[row, 4].Value = genero;
-						worksheet.Cells[row, 5].Value = endereco;
-						worksheet.Cells[row, 6].Value = telefone;
-						worksheet.Cells[row, 7].Value = bairro;
-						worksheet.Cells[row, 8].Value = cep;
-						worksheet.Cells[row, 9].Value = cidade;
-						worksheet.Cells[row, 10].Value = estado;
+						using (var worksheet = excelPackage.Workbook.Worksheets[planilha])
+						{
+							while (csv.Read())
+							{
+								var id = csv.GetField<int>(0);
+								var cpf = csv.GetField<string>(1);
+								var nome = csv.GetField<string>(2);
+								var genero = csv.GetField<string>(3);
+								var endereco = csv.GetField<string>(4);
+								var telefone = csv.GetField<string>(5);
+								var bairro = csv.GetField<string>(6);
+								var cep = csv.GetField<string>(7);
+								var cidade = csv.GetField<string>(8);
+								var estado = csv.GetField<string>(9);
 
-						row++;
+								worksheet.Cells[row, 1].Value = id;
+								worksheet.Cells[row, 2].Value = cpf;
+								worksheet.Cells[row, 3].Value = nome;
+								worksheet.Cells[row, 4].Value = genero;
+								worksheet.Cells[row, 5].Value = endereco;
+								worksheet.Cells[row, 6].Value = telefone;
+								worksheet.Cells[row, 7].Value = bairro;
+								worksheet.Cells[row, 8].Value = cep;
+								worksheet.Cells[row, 9].Value = cidade;
+								worksheet.Cells[row, 10].Value = estado;
+
+								row++;
+							}
+							excelPackage.Save();
+						}
+
+						lastLine = row - 1;
+						lblTotal.Text = $"/ {Convert.ToString(lastLine - 2)}";
 					}
-					MessageBox.Show("Dados do CSV transferidos para a planilha com sucesso", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-					lastLine = row - 1;
 				}
-
-				excelPackage.Save();
 			}
-
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Erro no método CarregarDadosCsvPlanilha: {ex.Message}");
+			}
 		}
 
 		private void btnProximo_Click(object sender, EventArgs e)
@@ -318,7 +334,6 @@ namespace TrabalhandoComCSV
 			actualLine = 3;
 			CarregarPlanilha();
 			lblStatus.Text = "Status: Pronto";
-			actualLine = 3;
 			tbLinha.Text = Convert.ToString(actualLine - 2);
 		}
 
@@ -328,7 +343,7 @@ namespace TrabalhandoComCSV
 			actualLine = lastLine;
 			CarregarPlanilha();
 			lblStatus.Text = "Status: Pronto";
-			tbLinha.Text = Convert.ToString(lastLine);
+			tbLinha.Text = Convert.ToString(lastLine - 2);
 		}
 
 		private void ExcluirCsv()
@@ -348,13 +363,15 @@ namespace TrabalhandoComCSV
 
 					MessageBox.Show($"Linha {linhaPraExcluir} excluída");
 
-					LimparPlanilha();
-
 					actualLine--;
 
 					CarregaDadosCsvPlanilha();
 
 					LimparCadastro();
+
+					actualLine = 3;
+
+					CarregarPlanilha();
 				}
 			}
 			catch (Exception)
@@ -365,7 +382,34 @@ namespace TrabalhandoComCSV
 
 		private void btnExcluir_Click(object sender, EventArgs e)
 		{
+			LimparPlanilha();
 			ExcluirCsv();
+			tbLinha.Text = Convert.ToString(actualLine - 2);
+		}
+
+		private void btnAviso_MouseEnter(object sender, EventArgs e)
+		{
+			btnAviso.BackgroundImage = Properties.Resources.aviso;
+		}
+
+		private void btnAviso_MouseLeave(object sender, EventArgs e)
+		{
+			btnAviso.BackgroundImage = Properties.Resources.aviso_hover;
+		}
+
+		private void btnAviso_MouseHover(object sender, EventArgs e)
+		{
+			btnAviso.BackColor = Color.Sienna;
+		}
+
+		private void btnAviso_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void tbNome_TextChanged(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
