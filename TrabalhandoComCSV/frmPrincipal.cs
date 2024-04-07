@@ -26,6 +26,7 @@ namespace TrabalhandoComCSV
 				btnSalvar.Enabled = false;
 
 				VerificaCampos();
+
 				csv.SalvarClienteCsv(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
 					mtbCep.Text, tbMunicipio.Text, tbEstado.Text);
 				LimparForm();

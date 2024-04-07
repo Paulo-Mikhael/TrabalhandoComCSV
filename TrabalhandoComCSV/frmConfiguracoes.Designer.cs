@@ -207,6 +207,7 @@
 			tbCelula.Name = "tbCelula";
 			tbCelula.Size = new Size(51, 25);
 			tbCelula.TabIndex = 3;
+			tbCelula.TextChanged += tbCelula_TextChanged;
 			// 
 			// textBox2
 			// 

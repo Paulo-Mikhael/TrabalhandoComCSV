@@ -109,7 +109,6 @@
 			tbNome.Name = "tbNome";
 			tbNome.Size = new Size(517, 25);
 			tbNome.TabIndex = 19;
-			tbNome.TextChanged += tbNome_TextChanged;
 			// 
 			// tbMunicipio
 			// 
@@ -150,7 +149,6 @@
 			tbId.Name = "tbId";
 			tbId.Size = new Size(100, 25);
 			tbId.TabIndex = 15;
-			tbId.TextChanged += tbId_TextChanged;
 			// 
 			// label8
 			// 
@@ -276,7 +274,6 @@
 			label1.TabIndex = 0;
 			label1.Text = resources.GetString("label1.Text");
 			label1.TextAlign = ContentAlignment.MiddleCenter;
-			label1.Click += label1_Click;
 			// 
 			// btnAnterior
 			// 
@@ -398,7 +395,6 @@
 			btnAviso.TabIndex = 0;
 			btnAviso.TabStop = false;
 			btnAviso.UseVisualStyleBackColor = false;
-			btnAviso.Click += btnAviso_Click;
 			btnAviso.MouseEnter += btnAviso_MouseEnter;
 			btnAviso.MouseLeave += btnAviso_MouseLeave;
 			btnAviso.MouseHover += btnAviso_MouseHover;
@@ -464,7 +460,6 @@
 			Name = "frmPlanilha";
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Ler dados da planilha EXCEL";
-			FormClosing += frmPlanilha_FormClosing;
 			Load += frmPlanilha_Load;
 			ResumeLayout(false);
 			PerformLayout();

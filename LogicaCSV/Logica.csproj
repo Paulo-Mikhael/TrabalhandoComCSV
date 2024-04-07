@@ -18,4 +18,9 @@
     </COMReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="31.0.3" />
+    <PackageReference Include="EPPlus" Version="7.1.0" />
+  </ItemGroup>
+
 </Project>

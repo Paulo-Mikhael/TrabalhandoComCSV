@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logica;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,8 +20,8 @@ namespace TrabalhandoComCSV
 
 		private void frmConfiguracoes_Load(object sender, EventArgs e)
 		{
-			lblXlsxDirectory.Text = frmPlanilha.excelPath;
-			lblCsvDirectory.Text = frmPlanilha.csvPath;
+			lblXlsxDirectory.Text = planCrud.excelPath;
+			lblCsvDirectory.Text = csvCrud.csvPath;
 		}
 
 		private void btnMudarXlsx_Click(object sender, EventArgs e)
@@ -35,8 +36,8 @@ namespace TrabalhandoComCSV
 
 			if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
 			{
-				frmPlanilha.excelPath = dialog.FileName;
-				lblXlsxDirectory.Text = frmPlanilha.excelPath;
+				planCrud.excelPath = dialog.FileName;
+				lblXlsxDirectory.Text = planCrud.excelPath;
 			}
 		}
 
@@ -51,8 +52,21 @@ namespace TrabalhandoComCSV
 
 			if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(file.FileName))
 			{
-				frmPlanilha.csvPath = file.FileName;
-				lblCsvDirectory.Text = frmPlanilha.csvPath;
+				csvCrud.csvPath = file.FileName;
+				lblCsvDirectory.Text = csvCrud.csvPath;
+			}
+		}
+
+		private void tbCelula_TextChanged(object sender, EventArgs e)
+		{
+			string[] alfabeto = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+			int[] indice = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27 };
+
+			Dictionary<string, int> coluna = new Dictionary<string, int>();
+
+			for (int i = 0; i < alfabeto.Length; i++)
+			{
+				coluna.Add(alfabeto[i], indice[i]);
 			}
 		}
 	}
