@@ -166,5 +166,11 @@ namespace TrabalhandoComCSV
 				MessageBox.Show("Diretório selecionado: Nenhum");
 			}
 		}
+
+		private void btnConfiguracoes_Click(object sender, EventArgs e)
+		{
+			var config = new frmConfiguracoes();
+			config.ShowDialog();
+		}
 	}
 }

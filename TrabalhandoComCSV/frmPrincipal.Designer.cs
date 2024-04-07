@@ -55,7 +55,7 @@
 			btnPlanilha = new ToolStripButton();
 			toolStripSeparator1 = new ToolStripSeparator();
 			toolStripSeparator3 = new ToolStripSeparator();
-			btnCsv = new ToolStripButton();
+			btnConfiguracoes = new ToolStripButton();
 			toolStripSeparator2 = new ToolStripSeparator();
 			tsFerramentas.SuspendLayout();
 			SuspendLayout();
@@ -265,7 +265,7 @@
 			// 
 			// tsFerramentas
 			// 
-			tsFerramentas.Items.AddRange(new ToolStripItem[] { btnPlanilha, toolStripSeparator1, toolStripSeparator3, btnCsv, toolStripSeparator2 });
+			tsFerramentas.Items.AddRange(new ToolStripItem[] { btnPlanilha, toolStripSeparator1, toolStripSeparator3, btnConfiguracoes, toolStripSeparator2 });
 			tsFerramentas.Location = new Point(0, 0);
 			tsFerramentas.Name = "tsFerramentas";
 			tsFerramentas.Size = new Size(739, 54);
@@ -295,19 +295,20 @@
 			toolStripSeparator3.Name = "toolStripSeparator3";
 			toolStripSeparator3.Size = new Size(6, 54);
 			// 
-			// btnCsv
+			// btnConfiguracoes
 			// 
-			btnCsv.Alignment = ToolStripItemAlignment.Right;
-			btnCsv.BackgroundImageLayout = ImageLayout.None;
-			btnCsv.ForeColor = SystemColors.ActiveCaptionText;
-			btnCsv.Image = Properties.Resources.configuracao;
-			btnCsv.ImageScaling = ToolStripItemImageScaling.None;
-			btnCsv.ImageTransparentColor = Color.Magenta;
-			btnCsv.Name = "btnCsv";
-			btnCsv.Size = new Size(88, 51);
-			btnCsv.Text = "Configurações";
-			btnCsv.TextImageRelation = TextImageRelation.ImageAboveText;
-			btnCsv.ToolTipText = "Configure os diretórios da planilha e CSV onde deseja salvar os dados";
+			btnConfiguracoes.Alignment = ToolStripItemAlignment.Right;
+			btnConfiguracoes.BackgroundImageLayout = ImageLayout.None;
+			btnConfiguracoes.ForeColor = SystemColors.ActiveCaptionText;
+			btnConfiguracoes.Image = Properties.Resources.configuracao;
+			btnConfiguracoes.ImageScaling = ToolStripItemImageScaling.None;
+			btnConfiguracoes.ImageTransparentColor = Color.Magenta;
+			btnConfiguracoes.Name = "btnConfiguracoes";
+			btnConfiguracoes.Size = new Size(88, 51);
+			btnConfiguracoes.Text = "Configurações";
+			btnConfiguracoes.TextImageRelation = TextImageRelation.ImageAboveText;
+			btnConfiguracoes.ToolTipText = "Configure os diretórios da planilha e CSV onde deseja salvar os dados";
+			btnConfiguracoes.Click += btnConfiguracoes_Click;
 			// 
 			// toolStripSeparator2
 			// 
@@ -346,6 +347,7 @@
 			Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
 			ForeColor = SystemColors.Control;
 			FormBorderStyle = FormBorderStyle.Fixed3D;
+			Icon = (Icon)resources.GetObject("$this.Icon");
 			MaximizeBox = false;
 			Name = "frmPrincipal";
 			StartPosition = FormStartPosition.CenterScreen;
@@ -385,7 +387,7 @@
 		private ToolStrip tsFerramentas;
 		private ToolStripButton btnPlanilha;
 		private ToolStripSeparator toolStripSeparator1;
-		private ToolStripButton btnCsv;
+		private ToolStripButton btnConfiguracoes;
 		private ToolStripSeparator toolStripSeparator3;
 		private ToolStripSeparator toolStripSeparator2;
 	}

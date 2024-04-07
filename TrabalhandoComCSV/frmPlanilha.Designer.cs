@@ -459,6 +459,7 @@
 			Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
 			ForeColor = SystemColors.ButtonHighlight;
 			FormBorderStyle = FormBorderStyle.Fixed3D;
+			Icon = (Icon)resources.GetObject("$this.Icon");
 			MaximizeBox = false;
 			Name = "frmPlanilha";
 			StartPosition = FormStartPosition.CenterScreen;

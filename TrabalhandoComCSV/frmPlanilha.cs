@@ -25,9 +25,9 @@ namespace TrabalhandoComCSV
 		Excel.Application app = new Excel.Application();
 		Workbook pasta;
 		Worksheet plan;
-		string excelPath = @"C:\Users\Monica\Documents\TesteDadosCsv\TabelaClientes.xlsx";
-		string csvPath = @"C:\Users\Monica\Documents\TesteDadosCsv\clientes.csv";
-		string planilha = "Planilha1";
+		public static string excelPath = @"C:\Users\Monica\Documents\TesteDadosCsv\TabelaClientes.xlsx";
+		public static string csvPath = @"C:\Users\Monica\Documents\TesteDadosCsv\clientes.csv";
+		public static string planilha = "Planilha1";
 		int firstLine = 3;
 		int lastLine;
 		static int actualLine = 3;
@@ -414,7 +414,7 @@ namespace TrabalhandoComCSV
 
 		private void label1_Click(object sender, EventArgs e)
 		{
-
+			MessageBox.Show(excelPath);
 		}
 
 		private void tbId_TextChanged(object sender, EventArgs e)
