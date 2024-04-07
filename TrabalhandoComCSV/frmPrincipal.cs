@@ -18,42 +18,24 @@ namespace TrabalhandoComCSV
 
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
+			var csv = new Logica.csvCrud();
 			var frmPlanilha = new frmPlanilha();
 
-			btnSalvar.Enabled = false;
-			SalvarClienteCsv();
-			LimparForm();
-			btnSalvar.Enabled = true;
-			frmPlanilha.CarregaDadosCsvPlanilha();
-		}
-
-		private void SalvarClienteCsv()
-		{
 			try
 			{
+				btnSalvar.Enabled = false;
+
 				VerificaCampos();
-
-				var id = tbId.Text.Replace(",", "");
-				var cpf = mtbCpf.Text.Replace(",", "");
-				var nome = tbNome.Text.Replace(",", "");
-				var sexo = cdSexo.Text.Replace(",", "");
-				var endereco = tbEndereco.Text.Replace(",", "");
-				var numero = mtbNumero.Text.Replace(",", "");
-				var bairro = tbBairro.Text.Replace(",", "");
-				var cep = mtbCep.Text.Replace(",", "");
-				var municipio = tbMunicipio.Text.Replace(",", "");
-				var estado = tbEstado.Text.Replace(",", "");
-
-				var linha = $"{id},{cpf},{nome},{sexo},{endereco},{numero},{bairro},{cep},{municipio},{estado}";
-
-				using (StreamWriter arquivo = new StreamWriter(@"C:\Users\Monica\Documents\TesteDadosCsv\clientes.csv", true))
-				{
-					arquivo.WriteLine(linha);
-				}
+				csv.SalvarClienteCsv(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
+					mtbCep.Text, tbMunicipio.Text, tbEstado.Text);
+				LimparForm();
+				btnSalvar.Enabled = true;
+				frmPlanilha.CarregaDadosCsvPlanilha();
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, "Problemas no cadastro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				btnSalvar.Enabled = true;
 			}
 		}
 
@@ -145,25 +127,6 @@ namespace TrabalhandoComCSV
 			if (e.KeyCode == Keys.Enter)
 			{
 				btnSalvar_Click(sender, e);
-			}
-		}
-
-		private void btnXlsx_Click(object sender, EventArgs e)
-		{
-			OpenFileDialog file = new OpenFileDialog();
-
-			file.Filter = "Arquivos Excel (*.xlsx)|*.xlsx|Todos os arquivos (*.*)|*.*";
-			file.FilterIndex = 1;
-
-			DialogResult result = file.ShowDialog();
-
-			if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(file.FileName))
-			{
-				MessageBox.Show("Diretório selecionado: " + file.FileName);
-			}
-			else
-			{
-				MessageBox.Show("Diretório selecionado: Nenhum");
 			}
 		}
 

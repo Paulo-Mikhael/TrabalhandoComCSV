@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CsvHelper;
+using Logica;
 using Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -22,15 +23,16 @@ namespace TrabalhandoComCSV
 {
 	public partial class frmPlanilha : Form
 	{
+		Logica.planCrud planCrud = new Logica.planCrud();
 		Excel.Application app = new Excel.Application();
 		Workbook pasta;
 		Worksheet plan;
 		public static string excelPath = @"C:\Users\Monica\Documents\TesteDadosCsv\TabelaClientes.xlsx";
 		public static string csvPath = @"C:\Users\Monica\Documents\TesteDadosCsv\clientes.csv";
 		public static string planilha = "Planilha1";
-		int firstLine = 3;
+		int firstLine = planCrud.firstLine;
 		int lastLine;
-		static int actualLine = 3;
+		static int actualLine = planCrud.actualLine;
 
 		public frmPlanilha()
 		{
@@ -40,7 +42,6 @@ namespace TrabalhandoComCSV
 		private void frmPlanilha_Load(object sender, EventArgs e)
 		{
 			CarregaDadosCsvPlanilha();
-			CarregarPlanilha();
 			lblStatus.Text = "Status: Pronto";
 			tbLinha.Text = Convert.ToString(actualLine - 2);
 		}
@@ -54,32 +55,22 @@ namespace TrabalhandoComCSV
 		{
 			try
 			{
-				pasta = app.Workbooks.Open(excelPath);
-				plan = pasta.Worksheets[planilha];
+				var dadosPlanilha = planCrud.CarregarPlanilha();
 
-				var primeiraCelula = plan.Cells[firstLine, 1].Value;
+				lblStatus.Text = "Status: Carregando dados...";
 
-				if (primeiraCelula != null)
-				{
-					lblStatus.Text = "Status: Carregando dados...";
+				tbId.Text = dadosPlanilha[0];
+				mtbCpf.Text = dadosPlanilha[1];
+				tbNome.Text = dadosPlanilha[2];
+				cdSexo.Text = dadosPlanilha[3];
+				tbEndereco.Text = dadosPlanilha[4];
+				mtbNumero.Text = dadosPlanilha[5];
+				tbBairro.Text = dadosPlanilha[6];
+				mtbCep.Text = dadosPlanilha[7];
+				tbMunicipio.Text = dadosPlanilha[8];
+				tbEstado.Text = dadosPlanilha[9];
 
-					tbId.Text = plan.Cells[actualLine, 1].Value.ToString();
-					tbNome.Text = plan.Cells[actualLine, 3].Value.ToString();
-					mtbCpf.Text = plan.Cells[actualLine, 2].Value.ToString();
-					cdSexo.Text = plan.Cells[actualLine, 4].Value.ToString();
-					tbEndereco.Text = plan.Cells[actualLine, 5].Value.ToString();
-					mtbNumero.Text = plan.Cells[actualLine, 6].Value.ToString();
-					tbBairro.Text = plan.Cells[actualLine, 7].Value.ToString();
-					mtbCep.Text = plan.Cells[actualLine, 8].Value.ToString();
-					tbEstado.Text = plan.Cells[actualLine, 9].Value.ToString();
-					tbMunicipio.Text = plan.Cells[actualLine, 10].Value.ToString();
-
-					lblStatus.Text = "Status: Pronto";
-				}
-				else
-				{
-					lblStatus.Text = "Status: Sem dados na planilha";
-				}
+				lblStatus.Text = "Status: Pronto";
 			}
 			catch (Exception ex)
 			{
@@ -93,6 +84,7 @@ namespace TrabalhandoComCSV
 			btnSalvar.Enabled = false;
 			try
 			{
+				var csv = new Logica.csvCrud();
 				AtualizaPlanilha(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
 					mtbCep.Text, tbEstado.Text, tbMunicipio.Text);
 				AtualizaCsv(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
@@ -277,6 +269,7 @@ namespace TrabalhandoComCSV
 
 								row++;
 							}
+
 							excelPackage.Save();
 						}
 
@@ -415,6 +408,7 @@ namespace TrabalhandoComCSV
 		private void label1_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show(excelPath);
+			MessageBox.Show(csvPath);
 		}
 
 		private void tbId_TextChanged(object sender, EventArgs e)
