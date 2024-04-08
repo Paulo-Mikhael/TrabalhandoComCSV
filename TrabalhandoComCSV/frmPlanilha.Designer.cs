@@ -62,6 +62,7 @@
 			lblTotal = new Label();
 			btnAviso = new Button();
 			btnAbrir = new Button();
+			lblExcluirCarregando = new Label();
 			SuspendLayout();
 			// 
 			// cdSexo
@@ -73,7 +74,8 @@
 			cdSexo.Location = new Point(112, 191);
 			cdSexo.Name = "cdSexo";
 			cdSexo.Size = new Size(194, 25);
-			cdSexo.TabIndex = 24;
+			cdSexo.TabIndex = 3;
+			cdSexo.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// mtbCep
 			// 
@@ -82,7 +84,8 @@
 			mtbCep.Mask = "99,999-999";
 			mtbCep.Name = "mtbCep";
 			mtbCep.Size = new Size(107, 25);
-			mtbCep.TabIndex = 23;
+			mtbCep.TabIndex = 8;
+			mtbCep.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// mtbNumero
 			// 
@@ -91,7 +94,8 @@
 			mtbNumero.Mask = "(99) 99999-9999";
 			mtbNumero.Name = "mtbNumero";
 			mtbNumero.Size = new Size(107, 25);
-			mtbNumero.TabIndex = 22;
+			mtbNumero.TabIndex = 7;
+			mtbNumero.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// mtbCpf
 			// 
@@ -100,7 +104,8 @@
 			mtbCpf.Mask = "999,999,999-99";
 			mtbCpf.Name = "mtbCpf";
 			mtbCpf.Size = new Size(100, 25);
-			mtbCpf.TabIndex = 21;
+			mtbCpf.TabIndex = 1;
+			mtbCpf.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// tbNome
 			// 
@@ -108,7 +113,8 @@
 			tbNome.Location = new Point(112, 157);
 			tbNome.Name = "tbNome";
 			tbNome.Size = new Size(517, 25);
-			tbNome.TabIndex = 19;
+			tbNome.TabIndex = 2;
+			tbNome.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// tbMunicipio
 			// 
@@ -116,7 +122,8 @@
 			tbMunicipio.Location = new Point(112, 293);
 			tbMunicipio.Name = "tbMunicipio";
 			tbMunicipio.Size = new Size(324, 25);
-			tbMunicipio.TabIndex = 18;
+			tbMunicipio.TabIndex = 6;
+			tbMunicipio.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// tbBairro
 			// 
@@ -124,7 +131,8 @@
 			tbBairro.Location = new Point(112, 259);
 			tbBairro.Name = "tbBairro";
 			tbBairro.Size = new Size(324, 25);
-			tbBairro.TabIndex = 17;
+			tbBairro.TabIndex = 5;
+			tbBairro.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// tbEndereco
 			// 
@@ -132,7 +140,8 @@
 			tbEndereco.Location = new Point(112, 225);
 			tbEndereco.Name = "tbEndereco";
 			tbEndereco.Size = new Size(324, 25);
-			tbEndereco.TabIndex = 16;
+			tbEndereco.TabIndex = 4;
+			tbEndereco.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// tbEstado
 			// 
@@ -140,7 +149,8 @@
 			tbEstado.Location = new Point(522, 293);
 			tbEstado.Name = "tbEstado";
 			tbEstado.Size = new Size(107, 25);
-			tbEstado.TabIndex = 20;
+			tbEstado.TabIndex = 9;
+			tbEstado.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// tbId
 			// 
@@ -148,7 +158,9 @@
 			tbId.Location = new Point(112, 89);
 			tbId.Name = "tbId";
 			tbId.Size = new Size(100, 25);
-			tbId.TabIndex = 15;
+			tbId.TabIndex = 0;
+			tbId.TabStop = false;
+			tbId.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// label8
 			// 
@@ -249,7 +261,8 @@
 			btnSalvar.Location = new Point(38, 449);
 			btnSalvar.Name = "btnSalvar";
 			btnSalvar.Size = new Size(108, 37);
-			btnSalvar.TabIndex = 25;
+			btnSalvar.TabIndex = 0;
+			btnSalvar.TabStop = false;
 			btnSalvar.Text = "Salvar dados";
 			btnSalvar.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnSalvar.UseVisualStyleBackColor = false;
@@ -263,6 +276,7 @@
 			lblStatus.Size = new Size(50, 17);
 			lblStatus.TabIndex = 5;
 			lblStatus.Text = "Status:";
+			lblStatus.Click += lblStatus_Click;
 			// 
 			// label1
 			// 
@@ -284,7 +298,8 @@
 			btnAnterior.Location = new Point(431, 449);
 			btnAnterior.Name = "btnAnterior";
 			btnAnterior.Size = new Size(96, 37);
-			btnAnterior.TabIndex = 25;
+			btnAnterior.TabIndex = 0;
+			btnAnterior.TabStop = false;
 			btnAnterior.Text = "Anterior";
 			btnAnterior.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnAnterior.UseVisualStyleBackColor = false;
@@ -299,7 +314,8 @@
 			btnProximo.Location = new Point(533, 449);
 			btnProximo.Name = "btnProximo";
 			btnProximo.Size = new Size(96, 37);
-			btnProximo.TabIndex = 25;
+			btnProximo.TabIndex = 0;
+			btnProximo.TabStop = false;
 			btnProximo.Text = "Proximo";
 			btnProximo.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnProximo.UseVisualStyleBackColor = false;
@@ -314,7 +330,8 @@
 			btnExcluir.Location = new Point(292, 449);
 			btnExcluir.Name = "btnExcluir";
 			btnExcluir.Size = new Size(96, 37);
-			btnExcluir.TabIndex = 25;
+			btnExcluir.TabIndex = 0;
+			btnExcluir.TabStop = false;
 			btnExcluir.Text = "Excluir";
 			btnExcluir.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnExcluir.UseVisualStyleBackColor = false;
@@ -329,7 +346,8 @@
 			btnUltimo.Location = new Point(533, 394);
 			btnUltimo.Name = "btnUltimo";
 			btnUltimo.Size = new Size(96, 37);
-			btnUltimo.TabIndex = 25;
+			btnUltimo.TabIndex = 0;
+			btnUltimo.TabStop = false;
 			btnUltimo.Text = "Ultimo";
 			btnUltimo.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnUltimo.UseVisualStyleBackColor = false;
@@ -344,7 +362,8 @@
 			btnPrimeiro.Location = new Point(431, 394);
 			btnPrimeiro.Name = "btnPrimeiro";
 			btnPrimeiro.Size = new Size(96, 37);
-			btnPrimeiro.TabIndex = 25;
+			btnPrimeiro.TabIndex = 0;
+			btnPrimeiro.TabStop = false;
 			btnPrimeiro.Text = "Primeiro";
 			btnPrimeiro.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnPrimeiro.UseVisualStyleBackColor = false;
@@ -365,8 +384,10 @@
 			tbLinha.Location = new Point(90, 359);
 			tbLinha.Name = "tbLinha";
 			tbLinha.Size = new Size(45, 25);
-			tbLinha.TabIndex = 15;
+			tbLinha.TabIndex = 0;
+			tbLinha.TabStop = false;
 			tbLinha.TextAlign = HorizontalAlignment.Center;
+			tbLinha.Leave += tbLinha_Leave;
 			// 
 			// lblTotal
 			// 
@@ -408,14 +429,26 @@
 			btnAbrir.Location = new Point(152, 449);
 			btnAbrir.Name = "btnAbrir";
 			btnAbrir.Size = new Size(96, 37);
-			btnAbrir.TabIndex = 25;
+			btnAbrir.TabIndex = 0;
+			btnAbrir.TabStop = false;
 			btnAbrir.Text = "Atualizar";
 			btnAbrir.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnAbrir.UseVisualStyleBackColor = false;
 			btnAbrir.Click += btnAbrir_Click;
 			// 
+			// lblExcluirCarregando
+			// 
+			lblExcluirCarregando.AutoSize = true;
+			lblExcluirCarregando.Location = new Point(296, 460);
+			lblExcluirCarregando.Name = "lblExcluirCarregando";
+			lblExcluirCarregando.Size = new Size(91, 17);
+			lblExcluirCarregando.TabIndex = 5;
+			lblExcluirCarregando.Text = "Carregando...";
+			lblExcluirCarregando.Click += lblStatus_Click;
+			// 
 			// frmPlanilha
 			// 
+			AcceptButton = btnSalvar;
 			AutoScaleMode = AutoScaleMode.None;
 			BackColor = Color.Sienna;
 			ClientSize = new Size(668, 502);
@@ -450,6 +483,7 @@
 			Controls.Add(label1);
 			Controls.Add(lblTotal);
 			Controls.Add(label12);
+			Controls.Add(lblExcluirCarregando);
 			Controls.Add(lblStatus);
 			Controls.Add(label2);
 			Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -461,6 +495,7 @@
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Ler dados da planilha EXCEL";
 			Load += frmPlanilha_Load;
+			KeyDown += frmPlanilha_KeyDown;
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -500,5 +535,6 @@
 		private Label lblTotal;
 		private Button btnAviso;
 		private Button btnAbrir;
+		private Label lblExcluirCarregando;
 	}
 }

@@ -25,7 +25,7 @@ namespace Logica
 
 		public List<string> CarregarPlanilha()
 		{
-			// {id},{cpf},{nome},{sexo},{endereco},{numero},{bairro},{cep},{municipio},{estado} => Ordem dos dados na Planilha 
+			// {id},{cpf},{nome},{sexo},{endereco},{numero},{bairro},{cep},{municipio},{estado} => Ordem dos dados na Planilha
 			try
 			{
 				List<string> dadosPlanilha = new List<string>();

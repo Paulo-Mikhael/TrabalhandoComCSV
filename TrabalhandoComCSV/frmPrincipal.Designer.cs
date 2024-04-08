@@ -318,6 +318,7 @@
 			// 
 			// frmPrincipal
 			// 
+			AcceptButton = btnSalvar;
 			AutoScaleMode = AutoScaleMode.None;
 			BackColor = Color.DodgerBlue;
 			ClientSize = new Size(739, 517);

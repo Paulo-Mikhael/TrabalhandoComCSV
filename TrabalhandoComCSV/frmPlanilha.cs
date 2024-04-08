@@ -42,7 +42,9 @@ namespace TrabalhandoComCSV
 
 		private void btnAbrir_Click(object sender, EventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
 			CarregarPlanilha();
+			Cursor = Cursors.Default;
 		}
 
 		private void CarregarPlanilha()
@@ -78,11 +80,13 @@ namespace TrabalhandoComCSV
 			btnSalvar.Enabled = false;
 			try
 			{
-				var csv = new Logica.csvCrud();
+				Cursor = Cursors.WaitCursor;
 				planCrud.AtualizaPlanilha(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
-					mtbCep.Text, tbEstado.Text, tbMunicipio.Text);
+					mtbCep.Text, tbMunicipio.Text, tbEstado.Text);
 				csvCrud.AtualizaCsv(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
-					mtbCep.Text, tbEstado.Text, tbMunicipio.Text);
+					mtbCep.Text, tbMunicipio.Text, tbEstado.Text);
+				Cursor = Cursors.Default;
+				MessageBox.Show("Dados salvos com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			catch (Exception ex)
 			{
@@ -125,59 +129,84 @@ namespace TrabalhandoComCSV
 
 		private void btnProximo_Click(object sender, EventArgs e)
 		{
-			planCrud.actualLine++;
-			int actualLine = planCrud.actualLine;
-
-			lblStatus.Text = "Status: Carregando...";
-
-			if (actualLine <= planCrud.lastLine)
+			Cursor = Cursors.WaitCursor;
+			if (btnProximo.Enabled == true)
 			{
-				CarregarPlanilha();
-				lblStatus.Text = "Status: Pronto";
-				tbLinha.Text = Convert.ToString(actualLine - 2);
-			}
-			else if (actualLine > planCrud.lastLine)
-			{
-				planCrud.actualLine--;
-				lblStatus.Text = "Status: Sem mais dados";
-			}
+				planCrud.actualLine++;
+				int actualLine = planCrud.actualLine;
 
+				lblStatus.Text = "Status: Carregando...";
+
+				btnProximo.Enabled = false;
+				btnAnterior.Enabled = false;
+
+				if (actualLine <= planCrud.lastLine)
+				{
+					CarregarPlanilha();
+					lblStatus.Text = "Status: Pronto";
+					tbLinha.Text = Convert.ToString(actualLine - 2);
+				}
+				else if (actualLine > planCrud.lastLine)
+				{
+					planCrud.actualLine--;
+					lblStatus.Text = "Status: Sem mais dados";
+				}
+
+				btnProximo.Enabled = true;
+				btnAnterior.Enabled = true;
+			}
+			Cursor = Cursors.Default;
 		}
 
 		private void btnAnterior_Click(object sender, EventArgs e)
 		{
-			planCrud.actualLine--;
-			int actualLine = planCrud.actualLine;
-
-			lblStatus.Text = "Status: Carregando...";
-
-			if (actualLine >= planCrud.firstLine)
+			Cursor = Cursors.WaitCursor;
+			if (btnAnterior.Enabled == true)
 			{
-				CarregarPlanilha();
-				lblStatus.Text = "Status: Pronto";
-				tbLinha.Text = Convert.ToString(actualLine - 2);
+				planCrud.actualLine--;
+				int actualLine = planCrud.actualLine;
+
+				lblStatus.Text = "Status: Carregando...";
+
+				btnProximo.Enabled = false;
+				btnAnterior.Enabled = false;
+
+				if (actualLine >= planCrud.firstLine)
+				{
+					CarregarPlanilha();
+					lblStatus.Text = "Status: Pronto";
+					tbLinha.Text = Convert.ToString(actualLine - 2);
+				}
+				else if (actualLine < planCrud.firstLine)
+				{
+					planCrud.actualLine++;
+					lblStatus.Text = "Status: Início da tabela";
+				}
+
+				btnProximo.Enabled = true;
+				btnAnterior.Enabled = true;
 			}
-			else if (actualLine < planCrud.firstLine)
-			{
-				planCrud.actualLine++;
-				lblStatus.Text = "Status: Início da tabela";
-			}
+			Cursor = Cursors.Default;
 		}
 
 		private void btnPrimeiro_Click(object sender, EventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
 			lblStatus.Text = "Status: Carregando...";
 			planCrud.actualLine = 3;
 			CarregarPlanilha();
+			Cursor = Cursors.Default;
 			lblStatus.Text = "Status: Pronto";
 			tbLinha.Text = Convert.ToString(planCrud.actualLine - 2);
 		}
 
 		private void btnUltimo_Click(object sender, EventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
 			lblStatus.Text = "Status: Carregando...";
 			planCrud.actualLine = planCrud.lastLine;
 			CarregarPlanilha();
+			Cursor = Cursors.Default;
 			lblStatus.Text = "Status: Pronto";
 			tbLinha.Text = Convert.ToString(planCrud.lastLine - 2);
 		}
@@ -186,18 +215,32 @@ namespace TrabalhandoComCSV
 		{
 			try
 			{
-				csvCrud.ExcluirCsv();
+				var result = MessageBox.Show($"Deseja excluir o cliente {tbNome.Text} de ID {tbId.Text}?", "Confirmação",
+					MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-				LimparCadastro();
+				if (result == DialogResult.OK)
+				{
+					Cursor = Cursors.WaitCursor;
+					btnExcluir.Visible = false;
 
-				CarregarPlanilha();
+					csvCrud.ExcluirCsv();
 
-				tbLinha.Text = Convert.ToString(planCrud.actualLine - 2);
-				lblTotal.Text = $"/ {Convert.ToString(planCrud.lastLine - 2)}";
+					LimparCadastro();
+
+					CarregarPlanilha();
+
+					tbLinha.Text = Convert.ToString(planCrud.actualLine - 2);
+					lblTotal.Text = $"/ {Convert.ToString(planCrud.lastLine - 2)}";
+				}
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message);
+			}
+			finally
+			{
+				btnExcluir.Visible = true;
+				Cursor = Cursors.Default;
 			}
 		}
 
@@ -214,6 +257,66 @@ namespace TrabalhandoComCSV
 		private void btnAviso_MouseHover(object sender, EventArgs e)
 		{
 			btnAviso.BackColor = Color.Sienna;
+		}
+
+		private void tbLinha_Leave(object sender, EventArgs e)
+		{
+			Cursor = Cursors.WaitCursor;
+			if (int.TryParse(tbLinha.Text, out int valor) == true && valor <= planCrud.lastLine)
+			{
+				planCrud.actualLine = valor + 2;
+				CarregarPlanilha();
+			}
+			else if (int.TryParse(tbLinha.Text, out _) == false || valor > planCrud.lastLine)
+			{
+				planCrud.actualLine = planCrud.firstLine;
+				CarregarPlanilha();
+				tbLinha.Text = Convert.ToString(planCrud.firstLine - 2);
+			}
+			Cursor = Cursors.Default;
+		}
+
+		private void lblStatus_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void frmPlanilha_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.S && e.Control)
+			{
+				btnSalvar_Click(sender, e);
+			}
+
+			if (e.KeyCode == Keys.E && e.Control)
+			{
+				btnExcluir_Click(sender, e);
+			}
+
+			if (e.KeyCode == Keys.F5)
+			{
+				btnAbrir_Click(sender, e);
+			}
+
+			if (e.KeyCode == Keys.Down && e.Shift)
+			{
+				btnUltimo_Click(sender, e);
+			}
+
+			if (e.KeyCode == Keys.Up && e.Shift)
+			{
+				btnPrimeiro_Click(sender, e);
+			}
+
+			if (e.KeyCode == Keys.Left && e.Shift)
+			{
+				btnAnterior_Click(sender, e);
+			}
+
+			if (e.KeyCode == Keys.Right && e.Shift)
+			{
+				btnProximo_Click(sender, e);
+			}
 		}
 	}
 }

@@ -8,7 +8,6 @@ namespace TrabalhandoComCSV
 		public frmPrincipal()
 		{
 			InitializeComponent();
-			this.KeyDown += frmPrincipal_KeyPress;
 		}
 
 		private void frmPrincipal_Load(object sender, EventArgs e)
@@ -18,12 +17,14 @@ namespace TrabalhandoComCSV
 
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
+
 			var csv = new Logica.csvCrud();
 			var frmPlanilha = new frmPlanilha();
 
 			try
 			{
-				btnSalvar.Enabled = false;
+				btnSalvar.Visible = false;
 
 				VerificaCampos();
 
@@ -36,7 +37,11 @@ namespace TrabalhandoComCSV
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, "Problemas no cadastro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				btnSalvar.Enabled = true;
+			}
+			finally
+			{
+				btnSalvar.Visible = true;
+				Cursor = Cursors.Default;
 			}
 		}
 
@@ -119,8 +124,10 @@ namespace TrabalhandoComCSV
 
 		private void btnPlanilha_Click(object sender, EventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
 			var planilha = new frmPlanilha();
 			planilha.ShowDialog();
+			Cursor = Cursors.Default;
 		}
 
 		private void frmPrincipal_KeyPress(object sender, KeyEventArgs e)

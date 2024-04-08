@@ -15,6 +15,7 @@ namespace Logica
 		{
 			try
 			{
+				// {id},{cpf},{nome},{sexo},{endereco},{numero},{bairro},{cep},{municipio},{estado} => Ordem dos dados no CSV
 				var idFormat = id.Replace(",", "");
 				var cpfFormat = cpf.Replace(",", "");
 				var nomeFormat = nome.Replace(",", "");
@@ -44,6 +45,7 @@ namespace Logica
 		{
 			try
 			{
+				// {id},{cpf},{nome},{sexo},{endereco},{numero},{bairro},{cep},{municipio},{estado} => Ordem dos dados no CSV
 				int actualLine = planCrud.actualLine;
 
 				int linhaParaAtualizar = actualLine - 2;
@@ -53,16 +55,16 @@ namespace Logica
 				if (linhaParaAtualizar >= 0 && linhaParaAtualizar < linhas.Length)
 				{
 					string[] campos = linhas[linhaParaAtualizar].Split(',');
-					campos[0] = id;
-					campos[1] = cpf;
-					campos[2] = nome;
-					campos[3] = sexo;
-					campos[4] = endereco;
-					campos[5] = numero;
-					campos[6] = bairro;
-					campos[7] = cep;
-					campos[8] = estado;
-					campos[9] = municipio;
+					campos[0] = id.Replace(",", "");
+					campos[1] = cpf.Replace(",", "");
+					campos[2] = nome.Replace(",", "");
+					campos[3] = sexo.Replace(",", "");
+					campos[4] = endereco.Replace(",", "");
+					campos[5] = numero.Replace(",", "");
+					campos[6] = bairro.Replace(",", "");
+					campos[7] = cep.Replace(",", "");
+					campos[8] = municipio.Replace(",", "");
+					campos[9] = estado.Replace(",", "");
 
 					linhas[linhaParaAtualizar] = string.Join(",", campos);
 
