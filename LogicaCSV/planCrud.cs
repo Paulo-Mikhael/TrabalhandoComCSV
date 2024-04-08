@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 using CsvHelper;
-using Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
-using Excel = Microsoft.Office.Interop.Excel;
 using LicenseContext = OfficeOpenXml.LicenseContext;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Logica
 {
@@ -22,10 +22,10 @@ namespace Logica
 		public static int firstLine = 3;
 		public static int actualLine = 3;
 		public static int lastLine;
+		public static int firstColumn = 1;
 
 		public List<string> CarregarPlanilha()
 		{
-			// {id},{cpf},{nome},{sexo},{endereco},{numero},{bairro},{cep},{municipio},{estado} => Ordem dos dados na Planilha
 			try
 			{
 				List<string> dadosPlanilha = new List<string>();
@@ -33,20 +33,14 @@ namespace Logica
 				pasta = app.Workbooks.Open(excelPath);
 				plan = pasta.Worksheets[planilha];
 
-				var primeiraCelula = plan.Cells[firstLine, 1].Value;
+				var primeiraCelula = plan.Cells[firstLine, firstColumn].Value;
 
 				if (primeiraCelula != null)
 				{
-					dadosPlanilha.Add(plan.Cells[actualLine, 1].Value.ToString());
-					dadosPlanilha.Add(plan.Cells[actualLine, 2].Value.ToString());
-					dadosPlanilha.Add(plan.Cells[actualLine, 3].Value.ToString());
-					dadosPlanilha.Add(plan.Cells[actualLine, 4].Value.ToString());
-					dadosPlanilha.Add(plan.Cells[actualLine, 5].Value.ToString());
-					dadosPlanilha.Add(plan.Cells[actualLine, 6].Value.ToString());
-					dadosPlanilha.Add(plan.Cells[actualLine, 7].Value.ToString());
-					dadosPlanilha.Add(plan.Cells[actualLine, 8].Value.ToString());
-					dadosPlanilha.Add(plan.Cells[actualLine, 9].Value.ToString());
-					dadosPlanilha.Add(plan.Cells[actualLine, 10].Value.ToString());
+					for (int i = firstColumn; i < 11; i++)
+					{
+						dadosPlanilha.Add(plan.Cells[actualLine, i].Value.ToString());
+					}
 				}
 				else
 				{
@@ -73,6 +67,8 @@ namespace Logica
 			{
 				ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
+				LimparPlanilha();
+
 				using (var excelPackage = new ExcelPackage(new FileInfo(excelPath)))
 				{
 					using (var reader = new StreamReader(csvPath))
@@ -96,16 +92,16 @@ namespace Logica
 								var cidade = csv.GetField<string>(8);
 								var estado = csv.GetField<string>(9);
 
-								worksheet.Cells[row, 1].Value = id;
-								worksheet.Cells[row, 2].Value = cpf;
-								worksheet.Cells[row, 3].Value = nome;
-								worksheet.Cells[row, 4].Value = genero;
-								worksheet.Cells[row, 5].Value = endereco;
-								worksheet.Cells[row, 6].Value = telefone;
-								worksheet.Cells[row, 7].Value = bairro;
-								worksheet.Cells[row, 8].Value = cep;
-								worksheet.Cells[row, 9].Value = cidade;
-								worksheet.Cells[row, 10].Value = estado;
+								worksheet.Cells[row, firstColumn].Value = id;
+								worksheet.Cells[row, firstColumn + 1].Value = cpf;
+								worksheet.Cells[row, firstColumn + 2].Value = nome;
+								worksheet.Cells[row, firstColumn + 3].Value = genero;
+								worksheet.Cells[row, firstColumn + 4].Value = endereco;
+								worksheet.Cells[row, firstColumn + 5].Value = telefone;
+								worksheet.Cells[row, firstColumn + 6].Value = bairro;
+								worksheet.Cells[row, firstColumn + 7].Value = cep;
+								worksheet.Cells[row, firstColumn + 8].Value = cidade;
+								worksheet.Cells[row, firstColumn + 9].Value = estado;
 
 								row++;
 							}
@@ -124,23 +120,24 @@ namespace Logica
 		}
 
 		public void AtualizaPlanilha(string id, string cpf, string nome, string sexo, string endereco, string numero, string bairro,
-			string cep, string estado, string municipio)
+			string cep, string municipio, string estado)
 		{
 			try
 			{
+				// {id},{cpf},{nome},{sexo},{endereco},{numero},{bairro},{cep},{municipio},{estado} => Ordem dos dados na Planilha
 				pasta = app.Workbooks.Open(excelPath);
 				plan = pasta.Worksheets[planilha];
 
-				plan.Cells[actualLine, 1].Value = id;
-				plan.Cells[actualLine, 2].Value = cpf;
-				plan.Cells[actualLine, 3].Value = nome;
-				plan.Cells[actualLine, 4].Value = sexo;
-				plan.Cells[actualLine, 5].Value = endereco;
-				plan.Cells[actualLine, 6].Value = numero;
-				plan.Cells[actualLine, 7].Value = bairro;
-				plan.Cells[actualLine, 8].Value = cep;
-				plan.Cells[actualLine, 9].Value = estado;
-				plan.Cells[actualLine, 10].Value = municipio;
+				plan.Cells[actualLine, firstColumn].Value = id;
+				plan.Cells[actualLine, firstColumn + 1].Value = cpf;
+				plan.Cells[actualLine, firstColumn + 2].Value = nome;
+				plan.Cells[actualLine, firstColumn + 3].Value = sexo;
+				plan.Cells[actualLine, firstColumn + 4].Value = endereco;
+				plan.Cells[actualLine, firstColumn + 5].Value = numero;
+				plan.Cells[actualLine, firstColumn + 6].Value = bairro;
+				plan.Cells[actualLine, firstColumn + 7].Value = cep;
+				plan.Cells[actualLine, firstColumn + 8].Value = municipio;
+				plan.Cells[actualLine, firstColumn + 9].Value = estado;
 			}
 			catch (Exception ex)
 			{
@@ -167,16 +164,16 @@ namespace Logica
 				{
 					for (int i = firstLine; i < lastLine + 1; i++)
 					{
-						plan.Cells[i, 1].Value = "";
-						plan.Cells[i, 2].Value = "";
-						plan.Cells[i, 3].Value = "";
-						plan.Cells[i, 4].Value = "";
-						plan.Cells[i, 5].Value = "";
-						plan.Cells[i, 6].Value = "";
-						plan.Cells[i, 7].Value = "";
-						plan.Cells[i, 8].Value = "";
-						plan.Cells[i, 9].Value = "";
-						plan.Cells[i, 10].Value = "";
+						plan.Cells[i, firstColumn].Value = "";
+						plan.Cells[i, firstColumn + 1].Value = "";
+						plan.Cells[i, firstColumn + 2].Value = "";
+						plan.Cells[i, firstColumn + 3].Value = "";
+						plan.Cells[i, firstColumn + 4].Value = "";
+						plan.Cells[i, firstColumn + 5].Value = "";
+						plan.Cells[i, firstColumn + 6].Value = "";
+						plan.Cells[i, firstColumn + 7].Value = "";
+						plan.Cells[i, firstColumn + 8].Value = "";
+						plan.Cells[i, firstColumn + 9].Value = "";
 					}
 				}
 			}

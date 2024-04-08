@@ -50,6 +50,7 @@
 			label12 = new Label();
 			groupBox1 = new GroupBox();
 			label13 = new Label();
+			btnSalvar = new Button();
 			groupBox1.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -220,7 +221,7 @@
 			// 
 			btnPlanilha.Location = new Point(165, 412);
 			btnPlanilha.Name = "btnPlanilha";
-			btnPlanilha.Size = new Size(172, 25);
+			btnPlanilha.Size = new Size(187, 25);
 			btnPlanilha.TabIndex = 3;
 			// 
 			// label11
@@ -228,18 +229,19 @@
 			label11.AutoSize = true;
 			label11.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
 			label11.ForeColor = Color.Gold;
-			label11.Location = new Point(411, 302);
+			label11.Location = new Point(396, 219);
 			label11.Name = "label11";
 			label11.Size = new Size(68, 25);
 			label11.TabIndex = 1;
 			label11.Text = "Avisos";
+			label11.Click += label11_Click;
 			// 
 			// label12
 			// 
 			label12.AutoSize = true;
 			label12.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
 			label12.ForeColor = Color.Gold;
-			label12.Location = new Point(411, 342);
+			label12.Location = new Point(396, 259);
 			label12.Name = "label12";
 			label12.Size = new Size(327, 95);
 			label12.TabIndex = 1;
@@ -275,11 +277,22 @@
 			label13.TabIndex = 1;
 			label13.Text = "OBS: Mudará de acordo com os dados do CSV";
 			// 
+			// btnSalvar
+			// 
+			btnSalvar.Location = new Point(277, 220);
+			btnSalvar.Name = "btnSalvar";
+			btnSalvar.Size = new Size(75, 29);
+			btnSalvar.TabIndex = 5;
+			btnSalvar.Text = "Salvar";
+			btnSalvar.UseVisualStyleBackColor = true;
+			btnSalvar.Click += btnSalvar_Click;
+			// 
 			// frmConfiguracoes
 			// 
 			AutoScaleMode = AutoScaleMode.None;
 			BackColor = Color.Blue;
 			ClientSize = new Size(750, 455);
+			Controls.Add(btnSalvar);
 			Controls.Add(groupBox1);
 			Controls.Add(textBox2);
 			Controls.Add(btnPlanilha);
@@ -330,5 +343,6 @@
 		private Label label12;
 		private GroupBox groupBox1;
 		private Label label13;
+		private Button btnSalvar;
 	}
 }

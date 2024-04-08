@@ -67,6 +67,8 @@ namespace TrabalhandoComCSV
 				tbEstado.Text = dadosPlanilha[9];
 
 				lblStatus.Text = "Status: Pronto";
+
+				mtbCpf.Focus();
 			}
 			catch (Exception ex)
 			{
@@ -80,6 +82,8 @@ namespace TrabalhandoComCSV
 			btnSalvar.Enabled = false;
 			try
 			{
+				VerificaCampos();
+
 				Cursor = Cursors.WaitCursor;
 				planCrud.AtualizaPlanilha(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
 					mtbCep.Text, tbMunicipio.Text, tbEstado.Text);
@@ -316,6 +320,74 @@ namespace TrabalhandoComCSV
 			if (e.KeyCode == Keys.Right && e.Shift)
 			{
 				btnProximo_Click(sender, e);
+			}
+		}
+
+		private void lblTotal_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void VerificaCampos()
+		{
+			var cpf = mtbCpf.Text.Replace(".", "").Replace("-", "");
+			var nome = tbNome.Text.Replace(",", "");
+			var sexo = cdSexo.SelectedIndex;
+			var endereco = tbEndereco.Text.Replace(",", "");
+			var numero = mtbNumero.Text.Replace(")", "").Replace("(", "").Replace("-", "").Replace(" ", "");
+			var bairro = tbBairro.Text.Replace(",", "");
+			var cep = mtbCep.Text.Replace(".", "").Replace("-", "");
+			var municipio = tbMunicipio.Text.Replace(",", "");
+			var estado = tbEstado.Text.Replace(",", "");
+
+			if (cpf.Length != 11)
+			{
+				throw new Exception("Insira um CPF");
+			}
+
+			if (nome == "")
+			{
+				throw new Exception("O campo Nome não pode ser vazio");
+			}
+
+			if (sexo == -1)
+			{
+				throw new Exception("Defina seu Sexo");
+			}
+
+			if (endereco == "")
+			{
+				throw new Exception("O campo Endereço não pode ser vazio");
+			}
+
+			if (bairro == "")
+			{
+				throw new Exception("O campo Bairro não pode ser vazio");
+			}
+
+			if (municipio == "")
+			{
+				throw new Exception("O campo Municipio não pode ser vazio");
+			}
+
+			if (numero.Length != 11)
+			{
+				throw new Exception("Insira um número para contato");
+			}
+
+			if (cep.Length != 8)
+			{
+				throw new Exception("Insira um Cep");
+			}
+
+			if (estado == "")
+			{
+				throw new Exception("O campo Estado não pode ser vazio.");
+			}
+
+			if (estado.Length != 2)
+			{
+				throw new Exception("Insira a sigla de um estado");
 			}
 		}
 	}

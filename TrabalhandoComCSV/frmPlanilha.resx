@@ -120,7 +120,7 @@
   <data name="label1.Text" xml:space="preserve">
     <value>Atenção: Para o funcionamento correto do aplicativo, a planilha no Excel precisa estar fechada, 
 além disso, você não poderá edita-la no Excel durante o uso do software;
-Motivo: Enquanto ela estar aberta no Excel, a planilha fica no modo leitura e vice-versa.</value>
+Motivo: Enquanto ela estiver aberta no Excel, a planilha fica no modo leitura e vice-versa.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

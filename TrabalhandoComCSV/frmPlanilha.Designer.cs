@@ -267,6 +267,7 @@
 			btnSalvar.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnSalvar.UseVisualStyleBackColor = false;
 			btnSalvar.Click += btnSalvar_Click;
+			btnSalvar.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// lblStatus
 			// 
@@ -304,6 +305,7 @@
 			btnAnterior.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnAnterior.UseVisualStyleBackColor = false;
 			btnAnterior.Click += btnAnterior_Click;
+			btnAnterior.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// btnProximo
 			// 
@@ -320,6 +322,7 @@
 			btnProximo.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnProximo.UseVisualStyleBackColor = false;
 			btnProximo.Click += btnProximo_Click;
+			btnProximo.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// btnExcluir
 			// 
@@ -336,6 +339,7 @@
 			btnExcluir.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnExcluir.UseVisualStyleBackColor = false;
 			btnExcluir.Click += btnExcluir_Click;
+			btnExcluir.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// btnUltimo
 			// 
@@ -352,6 +356,7 @@
 			btnUltimo.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnUltimo.UseVisualStyleBackColor = false;
 			btnUltimo.Click += btnUltimo_Click;
+			btnUltimo.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// btnPrimeiro
 			// 
@@ -368,6 +373,7 @@
 			btnPrimeiro.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnPrimeiro.UseVisualStyleBackColor = false;
 			btnPrimeiro.Click += btnPrimeiro_Click;
+			btnPrimeiro.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// label12
 			// 
@@ -387,6 +393,7 @@
 			tbLinha.TabIndex = 0;
 			tbLinha.TabStop = false;
 			tbLinha.TextAlign = HorizontalAlignment.Center;
+			tbLinha.KeyDown += frmPlanilha_KeyDown;
 			tbLinha.Leave += tbLinha_Leave;
 			// 
 			// lblTotal
@@ -398,6 +405,7 @@
 			lblTotal.Size = new Size(25, 17);
 			lblTotal.TabIndex = 5;
 			lblTotal.Text = "/ 7";
+			lblTotal.Click += lblTotal_Click;
 			// 
 			// btnAviso
 			// 
@@ -435,6 +443,7 @@
 			btnAbrir.TextImageRelation = TextImageRelation.ImageBeforeText;
 			btnAbrir.UseVisualStyleBackColor = false;
 			btnAbrir.Click += btnAbrir_Click;
+			btnAbrir.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// lblExcluirCarregando
 			// 
