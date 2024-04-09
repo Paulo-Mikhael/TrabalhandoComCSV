@@ -103,7 +103,7 @@ namespace TrabalhandoComCSV
 					throw new Exception("O campo Célula inicial está vazio");
 				}
 
-				if (tbCelula.Text.Length != 2 || int.TryParse(tbCelula.Text[1].ToString(), out int _) == false ||
+				if (tbCelula.Text.Length < 2 || int.TryParse(tbCelula.Text.Substring(1).Replace(" ", ""), out int _) == false ||
 					int.TryParse(tbCelula.Text[0].ToString(), out _))
 				{
 					throw new Exception("Insira uma célula válida");
@@ -112,32 +112,19 @@ namespace TrabalhandoComCSV
 				var coluna = ExcelLetraPraNumero();
 
 				string primeiroCaractere = tbCelula.Text[0].ToString().ToUpper();
-				string segundoCaractere = tbCelula.Text[1].ToString();
+				string resto = tbCelula.Text.Substring(1).Replace(" ", "");
 
 				int numeroColuna = coluna[primeiroCaractere];
-				int numeroLinha = Convert.ToInt32(segundoCaractere);
+				int numeroLinha = Convert.ToInt32(resto);
 
-				MessageBox.Show($"Coluna: {Convert.ToString(numeroColuna)} - Linha:{Convert.ToString(numeroLinha)}");
+				MessageBox.Show($"Coluna: {Convert.ToString(numeroColuna)} - Linha: {Convert.ToString(numeroLinha)}");
 
-				Excel.Application app = new Excel.Application();
-				Workbook pasta;
-				Worksheet plan;
+				planCrud.firstLine = numeroLinha;
+				planCrud.firstColumn = numeroColuna;
+				planCrud.actualLine = planCrud.firstLine;
 
-				var excelPath = @"C:\Users\Monica\Documents\Programação\Programação C#\TrabalhandoComCSV\Teste.xlsx";
-
-				if (!File.Exists(excelPath))
-				{
-					CriarPlanilha(excelPath);
-				}
-
-				pasta = app.Workbooks.Open(excelPath);
-				plan = pasta.Worksheets["Planilha1"];
-
-				plan.Cells[numeroLinha, numeroColuna].Value = "teste";
-
-				pasta.Save();
-				pasta.Close();
-				app.Quit();
+				var plan = new planCrud();
+				plan.NumeroCorte();
 			}
 			catch (Exception ex)
 			{

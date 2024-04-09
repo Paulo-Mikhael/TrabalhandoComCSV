@@ -41,14 +41,12 @@ namespace Logica
 		}
 
 		public void AtualizaCsv(string id, string cpf, string nome, string sexo, string endereco, string numero, string bairro,
-			string cep, string estado, string municipio)
+			string cep, string municipio, string estado)
 		{
 			try
 			{
 				// {id},{cpf},{nome},{sexo},{endereco},{numero},{bairro},{cep},{municipio},{estado} => Ordem dos dados no CSV
-				int actualLine = planCrud.actualLine;
-
-				int linhaParaAtualizar = actualLine - 2;
+				int linhaParaAtualizar = planCrud.actualLine - planCrud.linhaCorte;
 
 				string[] linhas = File.ReadAllLines(csvPath);
 
@@ -87,7 +85,7 @@ namespace Logica
 			{
 				var planilha = new planCrud();
 
-				int linhaPraExcluir = planCrud.actualLine - 2;
+				int linhaPraExcluir = planCrud.actualLine - planCrud.linhaCorte;
 
 				string[] linhas = File.ReadAllLines(csvPath);
 

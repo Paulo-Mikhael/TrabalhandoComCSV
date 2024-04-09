@@ -5,6 +5,7 @@ using OfficeOpenXml;
 using LicenseContext = OfficeOpenXml.LicenseContext;
 using Microsoft.Office.Interop.Excel;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Net.NetworkInformation;
 
 namespace Logica
 {
@@ -20,9 +21,33 @@ namespace Logica
 		public static string planilha = "Planilha1";
 
 		public static int firstLine = 3;
-		public static int actualLine = 3;
 		public static int lastLine;
-		public static int firstColumn = 1;
+		public static int actualLine = 3;
+		public static int firstColumn = 4;
+
+		public static int linhaCorte;
+		public static int colunaCorte;
+
+		public void NumeroCorte()
+		{
+			int corte = 0;
+
+			for (int i = firstLine; i != 1 ; i--)
+			{
+				corte++;
+			}
+
+			linhaCorte = corte;
+
+			corte = 0;
+
+			for (int i = firstColumn; i != 1 ; i--)
+			{
+				corte++;
+			}
+
+			colunaCorte = corte;
+		}
 
 		public List<string> CarregarPlanilha()
 		{
@@ -37,7 +62,7 @@ namespace Logica
 
 				if (primeiraCelula != null)
 				{
-					for (int i = firstColumn; i < 11; i++)
+					for (int i = firstColumn; i < firstColumn + 10; i++)
 					{
 						dadosPlanilha.Add(plan.Cells[actualLine, i].Value.ToString());
 					}

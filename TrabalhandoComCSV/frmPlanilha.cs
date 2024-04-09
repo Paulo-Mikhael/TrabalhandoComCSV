@@ -33,11 +33,12 @@ namespace TrabalhandoComCSV
 
 		private void frmPlanilha_Load(object sender, EventArgs e)
 		{
-			int actualLine = planCrud.actualLine;
-			CarregarPlanilha();
+			var plan = new planCrud();
+			plan.NumeroCorte();
 			CarregaDadosCsvPlanilha();
+			CarregarPlanilha();
 			lblStatus.Text = "Status: Pronto";
-			tbLinha.Text = Convert.ToString(planCrud.actualLine - 2);
+			tbLinha.Text = Convert.ToString(planCrud.actualLine - planCrud.linhaCorte);
 		}
 
 		private void btnAbrir_Click(object sender, EventArgs e)
@@ -123,7 +124,7 @@ namespace TrabalhandoComCSV
 			try
 			{
 				planCrud.CarregarCsvPlanilha();
-				lblTotal.Text = $"/ {Convert.ToString(planCrud.lastLine - 2)}";
+				lblTotal.Text = $"/ {Convert.ToString(planCrud.lastLine - planCrud.linhaCorte)}";
 			}
 			catch (Exception ex)
 			{
@@ -137,20 +138,20 @@ namespace TrabalhandoComCSV
 			if (btnProximo.Enabled == true)
 			{
 				planCrud.actualLine++;
-				int actualLine = planCrud.actualLine;
+				int actualLine = planCrud.actualLine - planCrud.linhaCorte;
 
 				lblStatus.Text = "Status: Carregando...";
 
 				btnProximo.Enabled = false;
 				btnAnterior.Enabled = false;
 
-				if (actualLine <= planCrud.lastLine)
+				if (planCrud.actualLine <= planCrud.lastLine)
 				{
 					CarregarPlanilha();
 					lblStatus.Text = "Status: Pronto";
-					tbLinha.Text = Convert.ToString(actualLine - 2);
+					tbLinha.Text = Convert.ToString(actualLine);
 				}
-				else if (actualLine > planCrud.lastLine)
+				else if (planCrud.actualLine > planCrud.lastLine)
 				{
 					planCrud.actualLine--;
 					lblStatus.Text = "Status: Sem mais dados";
@@ -168,20 +169,20 @@ namespace TrabalhandoComCSV
 			if (btnAnterior.Enabled == true)
 			{
 				planCrud.actualLine--;
-				int actualLine = planCrud.actualLine;
+				int actualLine = planCrud.actualLine - planCrud.linhaCorte;
 
 				lblStatus.Text = "Status: Carregando...";
 
 				btnProximo.Enabled = false;
 				btnAnterior.Enabled = false;
 
-				if (actualLine >= planCrud.firstLine)
+				if (planCrud.actualLine >= planCrud.firstLine)
 				{
 					CarregarPlanilha();
 					lblStatus.Text = "Status: Pronto";
-					tbLinha.Text = Convert.ToString(actualLine - 2);
+					tbLinha.Text = Convert.ToString(actualLine);
 				}
-				else if (actualLine < planCrud.firstLine)
+				else if (planCrud.actualLine < planCrud.firstLine)
 				{
 					planCrud.actualLine++;
 					lblStatus.Text = "Status: Início da tabela";
@@ -197,11 +198,11 @@ namespace TrabalhandoComCSV
 		{
 			Cursor = Cursors.WaitCursor;
 			lblStatus.Text = "Status: Carregando...";
-			planCrud.actualLine = 3;
+			planCrud.actualLine = planCrud.firstLine;
 			CarregarPlanilha();
 			Cursor = Cursors.Default;
 			lblStatus.Text = "Status: Pronto";
-			tbLinha.Text = Convert.ToString(planCrud.actualLine - 2);
+			tbLinha.Text = Convert.ToString(planCrud.actualLine - planCrud.linhaCorte);
 		}
 
 		private void btnUltimo_Click(object sender, EventArgs e)
@@ -212,7 +213,7 @@ namespace TrabalhandoComCSV
 			CarregarPlanilha();
 			Cursor = Cursors.Default;
 			lblStatus.Text = "Status: Pronto";
-			tbLinha.Text = Convert.ToString(planCrud.lastLine - 2);
+			tbLinha.Text = Convert.ToString(planCrud.lastLine - planCrud.linhaCorte);
 		}
 
 		private void btnExcluir_Click(object sender, EventArgs e)
@@ -222,7 +223,7 @@ namespace TrabalhandoComCSV
 				var result = MessageBox.Show($"Deseja excluir o cliente {tbNome.Text} de ID {tbId.Text}?", "Confirmação",
 					MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-				if (result == DialogResult.OK)
+				if (result == DialogResult.Yes)
 				{
 					Cursor = Cursors.WaitCursor;
 					btnExcluir.Visible = false;
@@ -233,8 +234,8 @@ namespace TrabalhandoComCSV
 
 					CarregarPlanilha();
 
-					tbLinha.Text = Convert.ToString(planCrud.actualLine - 2);
-					lblTotal.Text = $"/ {Convert.ToString(planCrud.lastLine - 2)}";
+					tbLinha.Text = Convert.ToString(planCrud.actualLine - planCrud.linhaCorte);
+					lblTotal.Text = $"/ {Convert.ToString(planCrud.lastLine - planCrud.linhaCorte)}";
 				}
 			}
 			catch (Exception ex)
@@ -268,14 +269,14 @@ namespace TrabalhandoComCSV
 			Cursor = Cursors.WaitCursor;
 			if (int.TryParse(tbLinha.Text, out int valor) == true && valor <= planCrud.lastLine)
 			{
-				planCrud.actualLine = valor + 2;
+				planCrud.actualLine = valor + planCrud.linhaCorte;
 				CarregarPlanilha();
 			}
 			else if (int.TryParse(tbLinha.Text, out _) == false || valor > planCrud.lastLine)
 			{
 				planCrud.actualLine = planCrud.firstLine;
 				CarregarPlanilha();
-				tbLinha.Text = Convert.ToString(planCrud.firstLine - 2);
+				tbLinha.Text = Convert.ToString(planCrud.firstLine - planCrud.linhaCorte);
 			}
 			Cursor = Cursors.Default;
 		}
