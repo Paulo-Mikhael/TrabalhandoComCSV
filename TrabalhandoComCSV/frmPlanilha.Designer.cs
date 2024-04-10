@@ -63,6 +63,8 @@
 			btnAviso = new Button();
 			btnAbrir = new Button();
 			lblExcluirCarregando = new Label();
+			tbPlanilha = new TextBox();
+			label13 = new Label();
 			SuspendLayout();
 			// 
 			// cdSexo
@@ -277,7 +279,6 @@
 			lblStatus.Size = new Size(50, 17);
 			lblStatus.TabIndex = 5;
 			lblStatus.Text = "Status:";
-			lblStatus.Click += lblStatus_Click;
 			// 
 			// label1
 			// 
@@ -405,7 +406,6 @@
 			lblTotal.Size = new Size(25, 17);
 			lblTotal.TabIndex = 5;
 			lblTotal.Text = "/ 7";
-			lblTotal.Click += lblTotal_Click;
 			// 
 			// btnAviso
 			// 
@@ -453,7 +453,29 @@
 			lblExcluirCarregando.Size = new Size(91, 17);
 			lblExcluirCarregando.TabIndex = 5;
 			lblExcluirCarregando.Text = "Carregando...";
-			lblExcluirCarregando.Click += lblStatus_Click;
+			// 
+			// tbPlanilha
+			// 
+			tbPlanilha.BackColor = Color.DarkGreen;
+			tbPlanilha.ForeColor = SystemColors.Control;
+			tbPlanilha.Location = new Point(529, 89);
+			tbPlanilha.Name = "tbPlanilha";
+			tbPlanilha.Size = new Size(100, 25);
+			tbPlanilha.TabIndex = 0;
+			tbPlanilha.TabStop = false;
+			tbPlanilha.Text = "Planilha1";
+			tbPlanilha.TextAlign = HorizontalAlignment.Center;
+			tbPlanilha.KeyDown += frmPlanilha_KeyDown;
+			tbPlanilha.Leave += tbPlanilha_Leave;
+			// 
+			// label13
+			// 
+			label13.AutoSize = true;
+			label13.Location = new Point(153, 459);
+			label13.Name = "label13";
+			label13.Size = new Size(94, 17);
+			label13.TabIndex = 5;
+			label13.Text = "Atualizando...";
 			// 
 			// frmPlanilha
 			// 
@@ -479,6 +501,7 @@
 			Controls.Add(tbEndereco);
 			Controls.Add(tbEstado);
 			Controls.Add(tbLinha);
+			Controls.Add(tbPlanilha);
 			Controls.Add(tbId);
 			Controls.Add(label8);
 			Controls.Add(label7);
@@ -493,6 +516,7 @@
 			Controls.Add(lblTotal);
 			Controls.Add(label12);
 			Controls.Add(lblExcluirCarregando);
+			Controls.Add(label13);
 			Controls.Add(lblStatus);
 			Controls.Add(label2);
 			Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -545,5 +569,7 @@
 		private Button btnAviso;
 		private Button btnAbrir;
 		private Label lblExcluirCarregando;
+		private TextBox tbPlanilha;
+		private Label label13;
 	}
 }

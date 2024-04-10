@@ -1,23 +1,4 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.ConstrainedExecution;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CsvHelper;
-using Logica;
-using Microsoft.Office.Interop.Excel;
-using OfficeOpenXml;
-using Excel = Microsoft.Office.Interop.Excel;
-using LicenseContext = OfficeOpenXml.LicenseContext;
+﻿using Logica;
 
 namespace TrabalhandoComCSV
 {
@@ -38,14 +19,28 @@ namespace TrabalhandoComCSV
 			CarregaDadosCsvPlanilha();
 			CarregarPlanilha();
 			lblStatus.Text = "Status: Pronto";
-			tbLinha.Text = Convert.ToString(planCrud.actualLine - planCrud.linhaCorte);
+			tbLinha.Text = Convert.ToString(planCrud.planActualLine - planCrud.linhaCorte);
+			tbPlanilha.Text = planCrud.planilha;
 		}
 
 		private void btnAbrir_Click(object sender, EventArgs e)
 		{
 			Cursor = Cursors.WaitCursor;
-			CarregarPlanilha();
-			Cursor = Cursors.Default;
+			btnAbrir.Visible = false;
+			try
+			{
+				CarregaDadosCsvPlanilha();
+				CarregarPlanilha();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			finally
+			{
+				btnAbrir.Visible = true;
+				Cursor = Cursors.Default;
+			}
 		}
 
 		private void CarregarPlanilha()
@@ -73,7 +68,7 @@ namespace TrabalhandoComCSV
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Erro");
+				MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
@@ -81,16 +76,27 @@ namespace TrabalhandoComCSV
 		{
 			lblStatus.Text = "Status: Carregando a planilha de clientes, aguarde...";
 			btnSalvar.Enabled = false;
+			Cursor = Cursors.WaitCursor;
+
 			try
 			{
-				VerificaCampos();
+				var verificacao = new verificacao();
 
-				Cursor = Cursors.WaitCursor;
-				planCrud.AtualizaPlanilha(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
-					mtbCep.Text, tbMunicipio.Text, tbEstado.Text);
-				csvCrud.AtualizaCsv(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
-					mtbCep.Text, tbMunicipio.Text, tbEstado.Text);
-				Cursor = Cursors.Default;
+				var cpf = mtbCpf.Text;
+				var nome = tbNome.Text.Replace(",", "");
+				var sexo = cdSexo.SelectedIndex;
+				var endereco = tbEndereco.Text.Replace(",", "");
+				var numero = mtbNumero.Text;
+				var bairro = tbBairro.Text.Replace(",", "");
+				var cep = mtbCep.Text;
+				var municipio = tbMunicipio.Text.Replace(",", "");
+				var estado = tbEstado.Text.Replace(",", "");
+
+				verificacao.VerificaCampos(cpf, nome, sexo, endereco, numero, bairro, cep, municipio, estado);
+
+				planCrud.AtualizaPlanilha(tbId.Text, cpf, nome, cdSexo.Text, endereco, numero, bairro, cep, municipio, estado);
+				csvCrud.AtualizaCsv(tbId.Text, cpf, nome, cdSexo.Text, endereco, numero, bairro, cep, municipio, estado);
+
 				MessageBox.Show("Dados salvos com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			catch (Exception ex)
@@ -101,6 +107,7 @@ namespace TrabalhandoComCSV
 			{
 				lblStatus.Text = "Status: Pronto";
 				btnSalvar.Enabled = true;
+				Cursor = Cursors.Default;
 			}
 		}
 
@@ -124,11 +131,11 @@ namespace TrabalhandoComCSV
 			try
 			{
 				planCrud.CarregarCsvPlanilha();
-				lblTotal.Text = $"/ {Convert.ToString(planCrud.lastLine - planCrud.linhaCorte)}";
+				lblTotal.Text = $"/ {Convert.ToString(planCrud.planLastLine - planCrud.linhaCorte)}";
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
@@ -137,23 +144,23 @@ namespace TrabalhandoComCSV
 			if (Cursor != Cursors.WaitCursor)
 			{
 				Cursor = Cursors.WaitCursor;
-				planCrud.actualLine++;
-				int actualLine = planCrud.actualLine - planCrud.linhaCorte;
+				planCrud.planActualLine++;
+				int actualLine = planCrud.planActualLine - planCrud.linhaCorte;
 
 				lblStatus.Text = "Status: Carregando...";
 
 				btnProximo.Enabled = false;
 				btnAnterior.Enabled = false;
 
-				if (planCrud.actualLine <= planCrud.lastLine)
+				if (planCrud.planActualLine <= planCrud.planLastLine)
 				{
 					CarregarPlanilha();
 					lblStatus.Text = "Status: Pronto";
 					tbLinha.Text = Convert.ToString(actualLine);
 				}
-				else if (planCrud.actualLine > planCrud.lastLine)
+				else if (planCrud.planActualLine > planCrud.planLastLine)
 				{
-					planCrud.actualLine--;
+					planCrud.planActualLine--;
 					lblStatus.Text = "Status: Sem mais dados";
 				}
 
@@ -168,23 +175,23 @@ namespace TrabalhandoComCSV
 			if (Cursor != Cursors.WaitCursor)
 			{
 				Cursor = Cursors.WaitCursor;
-				planCrud.actualLine--;
-				int actualLine = planCrud.actualLine - planCrud.linhaCorte;
+				planCrud.planActualLine--;
+				int actualLine = planCrud.planActualLine - planCrud.linhaCorte;
 
 				lblStatus.Text = "Status: Carregando...";
 
 				btnProximo.Enabled = false;
 				btnAnterior.Enabled = false;
 
-				if (planCrud.actualLine >= planCrud.firstLine)
+				if (planCrud.planActualLine >= planCrud.planFirstLine)
 				{
 					CarregarPlanilha();
 					lblStatus.Text = "Status: Pronto";
 					tbLinha.Text = Convert.ToString(actualLine);
 				}
-				else if (planCrud.actualLine < planCrud.firstLine)
+				else if (planCrud.planActualLine < planCrud.planFirstLine)
 				{
-					planCrud.actualLine++;
+					planCrud.planActualLine++;
 					lblStatus.Text = "Status: Início da tabela";
 				}
 
@@ -198,22 +205,22 @@ namespace TrabalhandoComCSV
 		{
 			Cursor = Cursors.WaitCursor;
 			lblStatus.Text = "Status: Carregando...";
-			planCrud.actualLine = planCrud.firstLine;
+			planCrud.planActualLine = planCrud.planFirstLine;
 			CarregarPlanilha();
 			Cursor = Cursors.Default;
 			lblStatus.Text = "Status: Pronto";
-			tbLinha.Text = Convert.ToString(planCrud.actualLine - planCrud.linhaCorte);
+			tbLinha.Text = Convert.ToString(planCrud.planActualLine - planCrud.linhaCorte);
 		}
 
 		private void btnUltimo_Click(object sender, EventArgs e)
 		{
 			Cursor = Cursors.WaitCursor;
 			lblStatus.Text = "Status: Carregando...";
-			planCrud.actualLine = planCrud.lastLine;
+			planCrud.planActualLine = planCrud.planLastLine;
 			CarregarPlanilha();
 			Cursor = Cursors.Default;
 			lblStatus.Text = "Status: Pronto";
-			tbLinha.Text = Convert.ToString(planCrud.lastLine - planCrud.linhaCorte);
+			tbLinha.Text = Convert.ToString(planCrud.planLastLine - planCrud.linhaCorte);
 		}
 
 		private void btnExcluir_Click(object sender, EventArgs e)
@@ -234,8 +241,8 @@ namespace TrabalhandoComCSV
 
 					CarregarPlanilha();
 
-					tbLinha.Text = Convert.ToString(planCrud.actualLine - planCrud.linhaCorte);
-					lblTotal.Text = $"/ {Convert.ToString(planCrud.lastLine - planCrud.linhaCorte)}";
+					tbLinha.Text = Convert.ToString(planCrud.planActualLine - planCrud.linhaCorte);
+					lblTotal.Text = $"/ {Convert.ToString(planCrud.planLastLine - planCrud.linhaCorte)}";
 				}
 			}
 			catch (Exception ex)
@@ -267,23 +274,20 @@ namespace TrabalhandoComCSV
 		private void tbLinha_Leave(object sender, EventArgs e)
 		{
 			Cursor = Cursors.WaitCursor;
-			if (int.TryParse(tbLinha.Text, out int valor) == true && valor <= planCrud.lastLine)
+			if (int.TryParse(tbLinha.Text, out int valor) == true && valor <= planCrud.planLastLine - planCrud.linhaCorte
+				&& valor >= planCrud.planFirstLine - planCrud.linhaCorte)
 			{
-				planCrud.actualLine = valor + planCrud.linhaCorte;
+				planCrud.planActualLine = valor + planCrud.linhaCorte;
 				CarregarPlanilha();
 			}
-			else if (int.TryParse(tbLinha.Text, out _) == false || valor > planCrud.lastLine)
+			else if (int.TryParse(tbLinha.Text, out _) == false || valor > planCrud.planLastLine - planCrud.linhaCorte
+				|| valor < planCrud.planFirstLine - planCrud.linhaCorte)
 			{
-				planCrud.actualLine = planCrud.firstLine;
+				planCrud.planActualLine = planCrud.planFirstLine;
 				CarregarPlanilha();
-				tbLinha.Text = Convert.ToString(planCrud.firstLine - planCrud.linhaCorte);
+				tbLinha.Text = Convert.ToString(planCrud.planFirstLine - planCrud.linhaCorte);
 			}
 			Cursor = Cursors.Default;
-		}
-
-		private void lblStatus_Click(object sender, EventArgs e)
-		{
-
 		}
 
 		private void frmPlanilha_KeyDown(object sender, KeyEventArgs e)
@@ -327,71 +331,43 @@ namespace TrabalhandoComCSV
 			}
 		}
 
-		private void lblTotal_Click(object sender, EventArgs e)
+		private void tbPlanilha_Leave(object sender, EventArgs e)
 		{
-
-		}
-
-		private void VerificaCampos()
-		{
-			var cpf = mtbCpf.Text.Replace(".", "").Replace("-", "");
-			var nome = tbNome.Text.Replace(",", "");
-			var sexo = cdSexo.SelectedIndex;
-			var endereco = tbEndereco.Text.Replace(",", "");
-			var numero = mtbNumero.Text.Replace(")", "").Replace("(", "").Replace("-", "").Replace(" ", "");
-			var bairro = tbBairro.Text.Replace(",", "");
-			var cep = mtbCep.Text.Replace(".", "").Replace("-", "");
-			var municipio = tbMunicipio.Text.Replace(",", "");
-			var estado = tbEstado.Text.Replace(",", "");
-
-			if (cpf.Length != 11)
+			try
 			{
-				throw new Exception("Insira um CPF");
+				Cursor = Cursors.WaitCursor;
+				var plan = new planCrud();
+				var planilha = plan.VerificaNomePlanilha(tbPlanilha.Text);
+
+				if (planilha == false)
+				{
+					var result = MessageBox.Show("Nenhuma planilha existente com esse nome. Deseja criar uma nova?", "Confirmação",
+						MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+					if (result == DialogResult.Yes)
+					{
+						plan.AdicionaPlanilha(tbPlanilha.Text);
+						planCrud.planilha = tbPlanilha.Text;
+					}
+					else
+					{
+						tbPlanilha.Text = planCrud.planilha;
+					}
+				}
+				else if (planilha == true)
+				{
+					planCrud.planilha = tbPlanilha.Text;
+				}
+
+				btnAbrir_Click(sender, e);
 			}
-
-			if (nome == "")
+			catch (Exception ex)
 			{
-				throw new Exception("O campo Nome não pode ser vazio");
+				MessageBox.Show($"Erro ao carregar planilhas. \r\nErro: {ex.Message}");
 			}
-
-			if (sexo == -1)
+			finally
 			{
-				throw new Exception("Defina seu Sexo");
-			}
-
-			if (endereco == "")
-			{
-				throw new Exception("O campo Endereço não pode ser vazio");
-			}
-
-			if (bairro == "")
-			{
-				throw new Exception("O campo Bairro não pode ser vazio");
-			}
-
-			if (municipio == "")
-			{
-				throw new Exception("O campo Municipio não pode ser vazio");
-			}
-
-			if (numero.Length != 11)
-			{
-				throw new Exception("Insira um número para contato");
-			}
-
-			if (cep.Length != 8)
-			{
-				throw new Exception("Insira um Cep");
-			}
-
-			if (estado == "")
-			{
-				throw new Exception("O campo Estado não pode ser vazio.");
-			}
-
-			if (estado.Length != 2)
-			{
-				throw new Exception("Insira a sigla de um estado");
+				Cursor = Cursors.Default;
 			}
 		}
 	}

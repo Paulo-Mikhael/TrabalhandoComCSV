@@ -1,15 +1,4 @@
 ﻿using Logica;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Microsoft.Office.Interop.Excel;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace TrabalhandoComCSV
 {
@@ -47,7 +36,7 @@ namespace TrabalhandoComCSV
 			{
 				if (item.Value == planCrud.firstColumn)
 				{
-					tbCelula.Text = $"{item.Key}{Convert.ToString(planCrud.firstLine)}";
+					tbCelula.Text = $"{item.Key}{Convert.ToString(planCrud.planFirstLine)}";
 				}
 			}
 		}
@@ -99,6 +88,8 @@ namespace TrabalhandoComCSV
 		{
 			try
 			{
+				Cursor = Cursors.WaitCursor;
+
 				if (string.IsNullOrEmpty(tbCelula.Text))
 				{
 					throw new Exception("O campo Célula inicial está vazio");
@@ -118,27 +109,46 @@ namespace TrabalhandoComCSV
 				int numeroColuna = coluna[primeiroCaractere];
 				int numeroLinha = Convert.ToInt32(resto);
 
-				MessageBox.Show($"Coluna: {Convert.ToString(numeroColuna)} - Linha: {Convert.ToString(numeroLinha)}");
-
-				planCrud.firstLine = numeroLinha;
+				planCrud.planFirstLine = numeroLinha;
 				planCrud.firstColumn = numeroColuna;
-				planCrud.actualLine = planCrud.firstLine;
+				planCrud.planActualLine = planCrud.planFirstLine;
 				
 				if (tbPlanilha.Text == "")
 				{
 					tbPlanilha.Text = "Planilha1";
 				}
-				else
-				{
-					planCrud.planilha = tbPlanilha.Text;
-				}
 
 				var plan = new planCrud();
 				plan.NumeroCorte();
+				var planilha = plan.VerificaNomePlanilha(tbPlanilha.Text);
+				
+				if (planilha == false)
+				{
+					var result = MessageBox.Show("Nenhuma planilha existente com esse nome. Deseja criar uma nova?...", "Confirmação",
+						MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+					if (result == DialogResult.Yes)
+					{
+						plan.AdicionaPlanilha(tbPlanilha.Text);
+						planCrud.planilha = tbPlanilha.Text;
+					}
+					else
+					{
+						tbPlanilha.Text = planCrud.planilha;
+					}
+				}
+				else if (planilha == true)
+				{
+					planCrud.planilha = tbPlanilha.Text;
+				}
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, "Erro ao salvar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			finally
+			{
+				Cursor = Cursors.Default;
 			}
 		}
 	}

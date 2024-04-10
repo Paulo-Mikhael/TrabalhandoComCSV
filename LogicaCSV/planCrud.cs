@@ -1,11 +1,10 @@
-﻿using System.ComponentModel;
-using System.Globalization;
+﻿using System.Globalization;
 using CsvHelper;
 using OfficeOpenXml;
 using LicenseContext = OfficeOpenXml.LicenseContext;
 using Microsoft.Office.Interop.Excel;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 
 namespace Logica
 {
@@ -14,15 +13,13 @@ namespace Logica
 		Excel.Application app = new Excel.Application();
 		Workbook pasta;
 		Worksheet plan;
-		csvCrud csvCrud = new csvCrud();
 
-		static string csvPath = csvCrud.csvPath;
-		public static string excelPath = @"C:\Users\Monica\Documents\TesteDadosCsv\TabelaClientes2.xlsx";
+		public static string excelPath;
 		public static string planilha = "Planilha1";
 
-		public static int firstLine = 3;
-		public static int lastLine;
-		public static int actualLine = 3;
+		public static int planFirstLine = 3;
+		public static int planLastLine;
+		public static int planActualLine = 3;
 		public static int firstColumn = 1;
 
 		public static int linhaCorte;
@@ -31,7 +28,7 @@ namespace Logica
 		{
 			int corte = 0;
 
-			for (int i = firstLine; i != 1 ; i--)
+			for (int i = planFirstLine; i != 1 ; i--)
 			{
 				corte++;
 			}
@@ -48,13 +45,13 @@ namespace Logica
 				pasta = app.Workbooks.Open(excelPath);
 				plan = pasta.Worksheets[planilha];
 
-				var primeiraCelula = plan.Cells[firstLine, firstColumn].Value;
+				var primeiraCelula = plan.Cells[planFirstLine, firstColumn].Value;
 
 				if (primeiraCelula != null)
 				{
 					for (int i = firstColumn; i < firstColumn + 10; i++)
 					{
-						dadosPlanilha.Add(plan.Cells[actualLine, i].Value.ToString());
+						dadosPlanilha.Add(plan.Cells[planActualLine, i].Value.ToString());
 					}
 				}
 				else
@@ -87,11 +84,11 @@ namespace Logica
 
 				using (var excelPackage = new ExcelPackage(new FileInfo(excelPath)))
 				{
-					using (var reader = new StreamReader(csvPath))
+					using (var reader = new StreamReader(csvCrud.csvPath))
 					using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
 					{
 						csv.Read();
-						int row = firstLine;
+						int row = planFirstLine;
 
 						using (var worksheet = excelPackage.Workbook.Worksheets[planilha])
 						{
@@ -125,7 +122,8 @@ namespace Logica
 							excelPackage.Save();
 						}
 
-						lastLine = row - 1;
+						planLastLine = row - 1;
+						planActualLine = planFirstLine;
 					}
 				}
 			}
@@ -144,16 +142,16 @@ namespace Logica
 				pasta = app.Workbooks.Open(excelPath);
 				plan = pasta.Worksheets[planilha];
 
-				plan.Cells[actualLine, firstColumn].Value = id;
-				plan.Cells[actualLine, firstColumn + 1].Value = cpf;
-				plan.Cells[actualLine, firstColumn + 2].Value = nome;
-				plan.Cells[actualLine, firstColumn + 3].Value = sexo;
-				plan.Cells[actualLine, firstColumn + 4].Value = endereco;
-				plan.Cells[actualLine, firstColumn + 5].Value = numero;
-				plan.Cells[actualLine, firstColumn + 6].Value = bairro;
-				plan.Cells[actualLine, firstColumn + 7].Value = cep;
-				plan.Cells[actualLine, firstColumn + 8].Value = municipio;
-				plan.Cells[actualLine, firstColumn + 9].Value = estado;
+				plan.Cells[planActualLine, firstColumn].Value = id;
+				plan.Cells[planActualLine, firstColumn + 1].Value = cpf;
+				plan.Cells[planActualLine, firstColumn + 2].Value = nome;
+				plan.Cells[planActualLine, firstColumn + 3].Value = sexo;
+				plan.Cells[planActualLine, firstColumn + 4].Value = endereco;
+				plan.Cells[planActualLine, firstColumn + 5].Value = numero;
+				plan.Cells[planActualLine, firstColumn + 6].Value = bairro;
+				plan.Cells[planActualLine, firstColumn + 7].Value = cep;
+				plan.Cells[planActualLine, firstColumn + 8].Value = municipio;
+				plan.Cells[planActualLine, firstColumn + 9].Value = estado;
 
 				pasta.Save();
 			}
@@ -209,14 +207,57 @@ namespace Logica
 			}
 		}
 
-		private void CriarPlanilha(string filePath)
+		public void CriarArquivoXlsx(string filePath)
 		{
-			Excel.Application app = new Excel.Application();
-			Workbook workbook = app.Workbooks.Add();
-			Worksheet worksheet = workbook.Worksheets[1];
-			workbook.SaveAs(filePath);
-			workbook.Close();
-			app.Quit();
+			try
+			{
+				using (File.Create(filePath)) { };
+				excelPath = filePath;
+				AdicionaPlanilha("Planilha1");
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"Ocorreu um erro no método CriarArquivoXlsx. \r\nErro: {ex.Message}");
+			}
+		}
+
+		public void AdicionaPlanilha(string plan)
+		{
+			try
+			{
+				using (ExcelPackage package = new ExcelPackage(new FileInfo(excelPath)))
+				{
+					package.Workbook.Worksheets.Add(plan);
+					package.Save();
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"Ocorreu um erro no método AdicionaPlanilha. \r\nErro: {ex.Message}");
+			}
+		}
+
+		public bool VerificaNomePlanilha(string plan)
+		{
+			try
+			{
+				using (ExcelPackage package = new ExcelPackage(new FileInfo(excelPath)))
+				{
+					foreach (var worksheet in package.Workbook.Worksheets)
+					{
+						if (plan == worksheet.Name)
+						{
+							return true;
+						}
+					}
+				}
+
+				return false;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"Ocorreu um erro no método VerificaNomePlanilha. \r\nErro: {ex.Message}");
+			}
 		}
 	}
 }

@@ -1,5 +1,4 @@
-using System.IO;
-using System.Windows.Forms;
+using Logica;
 
 namespace TrabalhandoComCSV
 {
@@ -12,24 +11,61 @@ namespace TrabalhandoComCSV
 
 		private void frmPrincipal_Load(object sender, EventArgs e)
 		{
+			string nomeUsuario = Environment.UserName;
+			string excelPath = $@"C:/Users/{nomeUsuario}/TabelaClientes.xlsx";
+			string csvPath = $@"C:/Users/{nomeUsuario}/clientes.csv";
 
+			try
+			{
+				if (!File.Exists(excelPath))
+				{
+					var plan = new planCrud();
+					plan.CriarArquivoXlsx(excelPath);
+				}
+
+				if (!File.Exists(csvPath))
+				{
+					var csv = new csvCrud();
+					csv.CriarArquivoCsv(csvPath);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Erro ao criar arquivos iniciais. Por favor, selecione um diretório manualmente pelas configurações.\r\n" +
+					"Erro: {ex.Message}");
+			}
+			finally
+			{
+				planCrud.excelPath = excelPath;
+				csvCrud.csvPath = csvPath;
+			}
 		}
 
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
 			Cursor = Cursors.WaitCursor;
 
+			btnSalvar.Visible = false;
+
 			var csv = new Logica.csvCrud();
 			var frmPlanilha = new frmPlanilha();
+			var verificacao = new verificacao();
+
+			var cpf = mtbCpf.Text;
+			var nome = tbNome.Text.Replace(",", "");
+			var sexo = cdSexo.SelectedIndex;
+			var endereco = tbEndereco.Text.Replace(",", "");
+			var numero = mtbNumero.Text;
+			var bairro = tbBairro.Text.Replace(",", "");
+			var cep = mtbCep.Text;
+			var municipio = tbMunicipio.Text.Replace(",", "");
+			var estado = tbEstado.Text.Replace(",", "");
 
 			try
 			{
-				btnSalvar.Visible = false;
+				verificacao.VerificaCampos(cpf, nome, sexo, endereco, numero, bairro, cep, municipio, estado);
 
-				VerificaCampos();
-
-				csv.SalvarClienteCsv(tbId.Text, mtbCpf.Text, tbNome.Text, cdSexo.Text, tbEndereco.Text, mtbNumero.Text, tbBairro.Text,
-					mtbCep.Text, tbMunicipio.Text, tbEstado.Text);
+				csv.SalvarClienteCsv(tbId.Text, cpf, nome, cdSexo.Text, endereco, numero, bairro, cep, municipio, estado.ToUpper());
 				LimparForm();
 				btnSalvar.Enabled = true;
 				frmPlanilha.CarregaDadosCsvPlanilha();
@@ -57,69 +93,6 @@ namespace TrabalhandoComCSV
 			mtbCep.Clear();
 			mtbNumero.Clear();
 			cdSexo.SelectedIndex = -1;
-		}
-
-		private void VerificaCampos()
-		{
-			var cpf = mtbCpf.Text.Replace(".", "").Replace("-", "");
-			var nome = tbNome.Text.Replace(",", "");
-			var sexo = cdSexo.SelectedIndex;
-			var endereco = tbEndereco.Text.Replace(",", "");
-			var numero = mtbNumero.Text.Replace(")", "").Replace("(", "").Replace("-", "").Replace(" ", "");
-			var bairro = tbBairro.Text.Replace(",", "");
-			var cep = mtbCep.Text.Replace(".", "").Replace("-", "");
-			var municipio = tbMunicipio.Text.Replace(",", "");
-			var estado = tbEstado.Text.Replace(",", "");
-
-			if (cpf.Length != 11)
-			{
-				throw new Exception("Insira um CPF");
-			}
-
-			if (nome == "")
-			{
-				throw new Exception("O campo Nome não pode ser vazio");
-			}
-
-			if (sexo == -1)
-			{
-				throw new Exception("Defina seu Sexo");
-			}
-
-			if (endereco == "")
-			{
-				throw new Exception("O campo Endereço não pode ser vazio");
-			}
-
-			if (bairro == "")
-			{
-				throw new Exception("O campo Bairro não pode ser vazio");
-			}
-
-			if (municipio == "")
-			{
-				throw new Exception("O campo Municipio não pode ser vazio");
-			}
-
-			if (numero.Length != 11)
-			{
-				throw new Exception("Insira um número para contato");
-			}
-
-			if (cep.Length != 8)
-			{
-				throw new Exception("Insira um Cep");
-			}
-
-			if (estado == "")
-			{
-				throw new Exception("O campo Estado não pode ser vazio.");
-			}
-
-			if (estado.Length != 2)
-			{
-				throw new Exception("Insira a sigla de um estado");
-			}
 		}
 
 		private void btnPlanilha_Click(object sender, EventArgs e)
