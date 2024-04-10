@@ -134,9 +134,9 @@ namespace TrabalhandoComCSV
 
 		private void btnProximo_Click(object sender, EventArgs e)
 		{
-			Cursor = Cursors.WaitCursor;
-			if (btnProximo.Enabled == true)
+			if (Cursor != Cursors.WaitCursor)
 			{
+				Cursor = Cursors.WaitCursor;
 				planCrud.actualLine++;
 				int actualLine = planCrud.actualLine - planCrud.linhaCorte;
 
@@ -165,9 +165,9 @@ namespace TrabalhandoComCSV
 
 		private void btnAnterior_Click(object sender, EventArgs e)
 		{
-			Cursor = Cursors.WaitCursor;
-			if (btnAnterior.Enabled == true)
+			if (Cursor != Cursors.WaitCursor)
 			{
+				Cursor = Cursors.WaitCursor;
 				planCrud.actualLine--;
 				int actualLine = planCrud.actualLine - planCrud.linhaCorte;
 
@@ -288,39 +288,42 @@ namespace TrabalhandoComCSV
 
 		private void frmPlanilha_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.S && e.Control)
+			if (Cursor != Cursors.WaitCursor)
 			{
-				btnSalvar_Click(sender, e);
-			}
+				if (e.KeyCode == Keys.S && e.Control)
+				{
+					btnSalvar_Click(sender, e);
+				}
 
-			if (e.KeyCode == Keys.E && e.Control)
-			{
-				btnExcluir_Click(sender, e);
-			}
+				if (e.KeyCode == Keys.E && e.Control)
+				{
+					btnExcluir_Click(sender, e);
+				}
 
-			if (e.KeyCode == Keys.F5)
-			{
-				btnAbrir_Click(sender, e);
-			}
+				if (e.KeyCode == Keys.F5)
+				{
+					btnAbrir_Click(sender, e);
+				}
 
-			if (e.KeyCode == Keys.Down && e.Shift)
-			{
-				btnUltimo_Click(sender, e);
-			}
+				if (e.KeyCode == Keys.Down && e.Shift)
+				{
+					btnUltimo_Click(sender, e);
+				}
 
-			if (e.KeyCode == Keys.Up && e.Shift)
-			{
-				btnPrimeiro_Click(sender, e);
-			}
+				if (e.KeyCode == Keys.Up && e.Shift)
+				{
+					btnPrimeiro_Click(sender, e);
+				}
 
-			if (e.KeyCode == Keys.Left && e.Shift)
-			{
-				btnAnterior_Click(sender, e);
-			}
+				if (e.KeyCode == Keys.Left && e.Shift)
+				{
+					btnAnterior_Click(sender, e);
+				}
 
-			if (e.KeyCode == Keys.Right && e.Shift)
-			{
-				btnProximo_Click(sender, e);
+				if (e.KeyCode == Keys.Right && e.Shift)
+				{
+					btnProximo_Click(sender, e);
+				}
 			}
 		}
 

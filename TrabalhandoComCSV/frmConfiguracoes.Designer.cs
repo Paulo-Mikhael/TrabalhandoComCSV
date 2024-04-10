@@ -40,16 +40,12 @@
 			label2 = new Label();
 			label4 = new Label();
 			label7 = new Label();
-			label8 = new Label();
-			label9 = new Label();
 			label10 = new Label();
 			tbCelula = new TextBox();
-			textBox2 = new TextBox();
-			btnPlanilha = new TextBox();
+			tbPlanilha = new TextBox();
 			label11 = new Label();
 			label12 = new Label();
 			groupBox1 = new GroupBox();
-			label13 = new Label();
 			btnSalvar = new Button();
 			groupBox1.SuspendLayout();
 			SuspendLayout();
@@ -170,33 +166,12 @@
 			label7.TabIndex = 1;
 			label7.Text = "De A a Z";
 			// 
-			// label8
-			// 
-			label8.AutoSize = true;
-			label8.Font = new Font("Segoe UI", 7.75F, FontStyle.Bold);
-			label8.ForeColor = SystemColors.Control;
-			label8.Location = new Point(23, 331);
-			label8.Name = "label8";
-			label8.Size = new Size(51, 13);
-			label8.TabIndex = 1;
-			label8.Text = "De A a Z";
-			// 
-			// label9
-			// 
-			label9.AutoSize = true;
-			label9.ForeColor = SystemColors.Control;
-			label9.Location = new Point(23, 348);
-			label9.Name = "label9";
-			label9.Size = new Size(82, 17);
-			label9.TabIndex = 1;
-			label9.Text = "Célula final:";
-			// 
 			// label10
 			// 
 			label10.AutoSize = true;
 			label10.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
 			label10.ForeColor = SystemColors.Control;
-			label10.Location = new Point(23, 413);
+			label10.Location = new Point(23, 327);
 			label10.Name = "label10";
 			label10.Size = new Size(136, 20);
 			label10.TabIndex = 1;
@@ -210,19 +185,12 @@
 			tbCelula.TabIndex = 3;
 			tbCelula.TextChanged += tbCelula_TextChanged;
 			// 
-			// textBox2
+			// tbPlanilha
 			// 
-			textBox2.Location = new Point(120, 340);
-			textBox2.Name = "textBox2";
-			textBox2.Size = new Size(51, 25);
-			textBox2.TabIndex = 3;
-			// 
-			// btnPlanilha
-			// 
-			btnPlanilha.Location = new Point(165, 412);
-			btnPlanilha.Name = "btnPlanilha";
-			btnPlanilha.Size = new Size(187, 25);
-			btnPlanilha.TabIndex = 3;
+			tbPlanilha.Location = new Point(165, 326);
+			tbPlanilha.Name = "tbPlanilha";
+			tbPlanilha.Size = new Size(187, 25);
+			tbPlanilha.TabIndex = 3;
 			// 
 			// label11
 			// 
@@ -266,17 +234,6 @@
 			groupBox1.TabStop = false;
 			groupBox1.Text = "Diretórios";
 			// 
-			// label13
-			// 
-			label13.AutoSize = true;
-			label13.Font = new Font("Segoe UI", 7.75F, FontStyle.Bold);
-			label13.ForeColor = SystemColors.Control;
-			label13.Location = new Point(23, 370);
-			label13.Name = "label13";
-			label13.Size = new Size(245, 13);
-			label13.TabIndex = 1;
-			label13.Text = "OBS: Mudará de acordo com os dados do CSV";
-			// 
 			// btnSalvar
 			// 
 			btnSalvar.Location = new Point(277, 220);
@@ -291,20 +248,16 @@
 			// 
 			AutoScaleMode = AutoScaleMode.None;
 			BackColor = Color.Blue;
-			ClientSize = new Size(750, 455);
+			ClientSize = new Size(750, 376);
 			Controls.Add(btnSalvar);
 			Controls.Add(groupBox1);
-			Controls.Add(textBox2);
-			Controls.Add(btnPlanilha);
+			Controls.Add(tbPlanilha);
 			Controls.Add(tbCelula);
 			Controls.Add(label12);
 			Controls.Add(label11);
 			Controls.Add(label2);
-			Controls.Add(label9);
 			Controls.Add(label10);
 			Controls.Add(label4);
-			Controls.Add(label13);
-			Controls.Add(label8);
 			Controls.Add(label7);
 			Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
 			FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -333,16 +286,12 @@
 		private Label label2;
 		private Label label4;
 		private Label label7;
-		private Label label8;
-		private Label label9;
 		private Label label10;
 		private TextBox tbCelula;
-		private TextBox textBox2;
-		private TextBox btnPlanilha;
+		private TextBox tbPlanilha;
 		private Label label11;
 		private Label label12;
 		private GroupBox groupBox1;
-		private Label label13;
 		private Button btnSalvar;
 	}
 }

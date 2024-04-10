@@ -17,16 +17,15 @@ namespace Logica
 		csvCrud csvCrud = new csvCrud();
 
 		static string csvPath = csvCrud.csvPath;
-		public static string excelPath = @"C:\Users\Monica\Documents\TesteDadosCsv\TabelaClientes1.xlsx";
+		public static string excelPath = @"C:\Users\Monica\Documents\TesteDadosCsv\TabelaClientes2.xlsx";
 		public static string planilha = "Planilha1";
 
 		public static int firstLine = 3;
 		public static int lastLine;
 		public static int actualLine = 3;
-		public static int firstColumn = 4;
+		public static int firstColumn = 1;
 
 		public static int linhaCorte;
-		public static int colunaCorte;
 
 		public void NumeroCorte()
 		{
@@ -38,15 +37,6 @@ namespace Logica
 			}
 
 			linhaCorte = corte;
-
-			corte = 0;
-
-			for (int i = firstColumn; i != 1 ; i--)
-			{
-				corte++;
-			}
-
-			colunaCorte = corte;
 		}
 
 		public List<string> CarregarPlanilha()
@@ -72,6 +62,8 @@ namespace Logica
 					throw new Exception("Sem dados na planilha");
 				}
 
+				pasta.Save();
+
 				return dadosPlanilha;
 			}
 			catch (Exception ex)
@@ -80,7 +72,6 @@ namespace Logica
 			}
 			finally
 			{
-				pasta.Save();
 				pasta.Close(true);
 				app.Quit();
 			}
@@ -163,6 +154,8 @@ namespace Logica
 				plan.Cells[actualLine, firstColumn + 7].Value = cep;
 				plan.Cells[actualLine, firstColumn + 8].Value = municipio;
 				plan.Cells[actualLine, firstColumn + 9].Value = estado;
+
+				pasta.Save();
 			}
 			catch (Exception ex)
 			{
@@ -170,7 +163,6 @@ namespace Logica
 			}
 			finally
 			{
-				pasta.Save();
 				pasta.Close(true);
 				app.Quit();
 			}
@@ -183,24 +175,28 @@ namespace Logica
 				pasta = app.Workbooks.Open(excelPath);
 				plan = pasta.Worksheets[planilha];
 
-				var primeiraCelula = plan.Cells[firstLine, 1].Value;
+				Excel.Range usedRange = plan.UsedRange;
 
-				if (primeiraCelula != null)
+				foreach (Excel.Range cell in usedRange)
 				{
-					for (int i = firstLine; i < lastLine + 1; i++)
+					if (cell.Value != null)
 					{
-						plan.Cells[i, firstColumn].Value = "";
-						plan.Cells[i, firstColumn + 1].Value = "";
-						plan.Cells[i, firstColumn + 2].Value = "";
-						plan.Cells[i, firstColumn + 3].Value = "";
-						plan.Cells[i, firstColumn + 4].Value = "";
-						plan.Cells[i, firstColumn + 5].Value = "";
-						plan.Cells[i, firstColumn + 6].Value = "";
-						plan.Cells[i, firstColumn + 7].Value = "";
-						plan.Cells[i, firstColumn + 8].Value = "";
-						plan.Cells[i, firstColumn + 9].Value = "";
+						var value = cell.Value;
+
+						if (cell.Value.GetType() == typeof(double))
+						{
+							cell.ClearContents();
+						}
+						else if (value != "ID" && value != "CPF" && value != "NOME" && value != "SEXO" &&
+							value != "ENDERECO" && value != "NUMERO" && value != "BAIRRO" &&
+							value != "CEP" && value != "MUNICIPIO" && value != "ESTADO")
+						{
+							cell.ClearContents();
+						}
 					}
 				}
+
+				pasta.Save();
 			}
 			catch (Exception ex)
 			{
@@ -208,10 +204,19 @@ namespace Logica
 			}
 			finally
 			{
-				pasta.Save();
 				pasta.Close(true);
 				app.Quit();
 			}
+		}
+
+		private void CriarPlanilha(string filePath)
+		{
+			Excel.Application app = new Excel.Application();
+			Workbook workbook = app.Workbooks.Add();
+			Worksheet worksheet = workbook.Worksheets[1];
+			workbook.SaveAs(filePath);
+			workbook.Close();
+			app.Quit();
 		}
 	}
 }

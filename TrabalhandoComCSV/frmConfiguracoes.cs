@@ -39,6 +39,7 @@ namespace TrabalhandoComCSV
 		{
 			lblXlsxDirectory.Text = planCrud.excelPath;
 			lblCsvDirectory.Text = csvCrud.csvPath;
+			tbPlanilha.Text = planCrud.planilha;
 
 			var coluna = ExcelLetraPraNumero();
 
@@ -46,7 +47,7 @@ namespace TrabalhandoComCSV
 			{
 				if (item.Value == planCrud.firstColumn)
 				{
-					tbCelula.Text = $"{Convert.ToString(item.Key)}{Convert.ToString(planCrud.firstLine)}";
+					tbCelula.Text = $"{item.Key}{Convert.ToString(planCrud.firstLine)}";
 				}
 			}
 		}
@@ -122,6 +123,15 @@ namespace TrabalhandoComCSV
 				planCrud.firstLine = numeroLinha;
 				planCrud.firstColumn = numeroColuna;
 				planCrud.actualLine = planCrud.firstLine;
+				
+				if (tbPlanilha.Text == "")
+				{
+					tbPlanilha.Text = "Planilha1";
+				}
+				else
+				{
+					planCrud.planilha = tbPlanilha.Text;
+				}
 
 				var plan = new planCrud();
 				plan.NumeroCorte();
@@ -130,16 +140,6 @@ namespace TrabalhandoComCSV
 			{
 				MessageBox.Show(ex.Message, "Erro ao salvar", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-		}
-
-		private void CriarPlanilha(string filePath)
-		{
-			Excel.Application app = new Excel.Application();
-			Workbook workbook = app.Workbooks.Add();
-			Worksheet worksheet = workbook.Worksheets[1];
-			workbook.SaveAs(filePath);
-			workbook.Close();
-			app.Quit();
 		}
 	}
 }
