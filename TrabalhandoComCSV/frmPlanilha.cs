@@ -269,6 +269,7 @@ namespace TrabalhandoComCSV
 		private void btnAviso_MouseHover(object sender, EventArgs e)
 		{
 			btnAviso.BackColor = Color.Sienna;
+			btnConfig.BackColor = Color.Sienna;
 		}
 
 		private void tbLinha_Leave(object sender, EventArgs e)
@@ -331,44 +332,24 @@ namespace TrabalhandoComCSV
 			}
 		}
 
-		private void tbPlanilha_Leave(object sender, EventArgs e)
+		private void btnConfig_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				Cursor = Cursors.WaitCursor;
-				var plan = new planCrud();
-				var planilha = plan.VerificaNomePlanilha(tbPlanilha.Text);
+			var config = new frmConfiguracoes();
+			config.ShowDialog();
 
-				if (planilha == false)
-				{
-					var result = MessageBox.Show("Nenhuma planilha existente com esse nome. Deseja criar uma nova?", "Confirmação",
-						MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-					if (result == DialogResult.Yes)
-					{
-						plan.AdicionaPlanilha(tbPlanilha.Text);
-						planCrud.planilha = tbPlanilha.Text;
-					}
-					else
-					{
-						tbPlanilha.Text = planCrud.planilha;
-					}
-				}
-				else if (planilha == true)
-				{
-					planCrud.planilha = tbPlanilha.Text;
-				}
-
-				btnAbrir_Click(sender, e);
-			}
-			catch (Exception ex)
+			if (tbPlanilha.Text != planCrud.planilha)
 			{
-				MessageBox.Show($"Erro ao carregar planilhas. \r\nErro: {ex.Message}");
+				tbPlanilha.Text = planCrud.planilha;
+				MessageBox.Show("A planilha atual foi alterada. É necessário atualizar para passar os dados para a nova planilha.",
+					"Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			}
-			finally
-			{
-				Cursor = Cursors.Default;
-			}
+		}
+
+		private void btnAviso_Click(object sender, EventArgs e)
+		{
+			var controls = new frmControles();
+			controls.ShowDialog();
+			mtbCpf.Focus();
 		}
 	}
 }

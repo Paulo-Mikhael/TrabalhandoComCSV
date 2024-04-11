@@ -65,6 +65,7 @@
 			lblExcluirCarregando = new Label();
 			tbPlanilha = new TextBox();
 			label13 = new Label();
+			btnConfig = new Button();
 			SuspendLayout();
 			// 
 			// cdSexo
@@ -157,11 +158,13 @@
 			// tbId
 			// 
 			tbId.BackColor = SystemColors.ActiveBorder;
+			tbId.Enabled = false;
 			tbId.Location = new Point(112, 89);
 			tbId.Name = "tbId";
 			tbId.Size = new Size(100, 25);
 			tbId.TabIndex = 0;
 			tbId.TabStop = false;
+			tbId.TextAlign = HorizontalAlignment.Center;
 			tbId.KeyDown += frmPlanilha_KeyDown;
 			// 
 			// label8
@@ -424,6 +427,7 @@
 			btnAviso.TabIndex = 0;
 			btnAviso.TabStop = false;
 			btnAviso.UseVisualStyleBackColor = false;
+			btnAviso.Click += btnAviso_Click;
 			btnAviso.MouseEnter += btnAviso_MouseEnter;
 			btnAviso.MouseLeave += btnAviso_MouseLeave;
 			btnAviso.MouseHover += btnAviso_MouseHover;
@@ -456,9 +460,10 @@
 			// 
 			// tbPlanilha
 			// 
-			tbPlanilha.BackColor = Color.DarkGreen;
-			tbPlanilha.ForeColor = SystemColors.Control;
-			tbPlanilha.Location = new Point(529, 89);
+			tbPlanilha.BackColor = SystemColors.Control;
+			tbPlanilha.Enabled = false;
+			tbPlanilha.ForeColor = Color.DarkGreen;
+			tbPlanilha.Location = new Point(500, 89);
 			tbPlanilha.Name = "tbPlanilha";
 			tbPlanilha.Size = new Size(100, 25);
 			tbPlanilha.TabIndex = 0;
@@ -466,7 +471,6 @@
 			tbPlanilha.Text = "Planilha1";
 			tbPlanilha.TextAlign = HorizontalAlignment.Center;
 			tbPlanilha.KeyDown += frmPlanilha_KeyDown;
-			tbPlanilha.Leave += tbPlanilha_Leave;
 			// 
 			// label13
 			// 
@@ -477,12 +481,31 @@
 			label13.TabIndex = 5;
 			label13.Text = "Atualizando...";
 			// 
+			// btnConfig
+			// 
+			btnConfig.BackgroundImage = Properties.Resources.configuracao;
+			btnConfig.BackgroundImageLayout = ImageLayout.Stretch;
+			btnConfig.Cursor = Cursors.Hand;
+			btnConfig.FlatAppearance.BorderSize = 0;
+			btnConfig.FlatAppearance.MouseDownBackColor = Color.Sienna;
+			btnConfig.FlatAppearance.MouseOverBackColor = Color.Sienna;
+			btnConfig.FlatStyle = FlatStyle.Flat;
+			btnConfig.ForeColor = Color.Transparent;
+			btnConfig.Location = new Point(605, 89);
+			btnConfig.Name = "btnConfig";
+			btnConfig.Size = new Size(24, 25);
+			btnConfig.TabIndex = 15;
+			btnConfig.UseVisualStyleBackColor = true;
+			btnConfig.Click += btnConfig_Click;
+			btnConfig.MouseHover += btnAviso_MouseHover;
+			// 
 			// frmPlanilha
 			// 
 			AcceptButton = btnSalvar;
 			AutoScaleMode = AutoScaleMode.None;
 			BackColor = Color.Sienna;
 			ClientSize = new Size(668, 502);
+			Controls.Add(btnConfig);
 			Controls.Add(btnAviso);
 			Controls.Add(btnSalvar);
 			Controls.Add(btnProximo);
@@ -571,5 +594,6 @@
 		private Label lblExcluirCarregando;
 		private TextBox tbPlanilha;
 		private Label label13;
+		private Button btnConfig;
 	}
 }

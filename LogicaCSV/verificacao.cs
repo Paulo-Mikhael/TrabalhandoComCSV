@@ -25,6 +25,11 @@ namespace Logica
 				throw new Exception("Insira um CPF");
 			}
 
+			if (VerificaCpf(cpfM) == false)
+			{
+				throw new Exception("Cpf inválido");
+			}
+
 			if (nomeM == "")
 			{
 				throw new Exception("O campo Nome não pode ser vazio");
@@ -68,6 +73,76 @@ namespace Logica
 			if (estadoM.Length != 2)
 			{
 				throw new Exception("Insira a sigla de um estado");
+			}
+		}
+
+		private bool VerificaCpf(string cpfModificated)
+		{
+			try
+			{
+				int[] multiplicador1 = [10, 9, 8, 7, 6, 5, 4, 3, 2];
+				int[] multiplicador2 = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+
+				int soma;
+				int resto;
+
+				string cpf9num = cpfModificated.Substring(0, 9);
+
+				soma = 0;
+
+				for (int i = 0; i < 9; i++)
+				{
+					soma += int.Parse(cpf9num[i].ToString()) * multiplicador1[i];
+				}
+
+				resto = soma % 11;
+
+				if (resto < 2)
+				{
+					resto = 0;
+				}
+				else
+				{
+					resto = 11 - resto;
+				}
+
+				int digito1 = resto;
+
+				soma = 0;
+				resto = 0;
+
+				string cpf10num = cpf9num + digito1;
+
+				for (int i = 0; i < 10; i++)
+				{
+					soma += int.Parse(cpf10num[i].ToString()) * multiplicador2[i];
+				}
+
+				resto = soma % 11;
+
+				if (resto < 2)
+				{
+					resto = 0;
+				}
+				else
+				{
+					resto = 11 - resto;
+				}
+
+				int digito2 = resto;
+
+				string cpfVerificado = cpf10num + digito2;
+
+				if (cpfModificated == cpfVerificado)
+				{
+					return true;
+				}
+
+				return false;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"Ocorreu um erro no método VerificaCpf. \r\nErro: {ex.Message}");
 			}
 		}
 	}

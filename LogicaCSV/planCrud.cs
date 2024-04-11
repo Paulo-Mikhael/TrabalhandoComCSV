@@ -5,6 +5,7 @@ using LicenseContext = OfficeOpenXml.LicenseContext;
 using Microsoft.Office.Interop.Excel;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace Logica
 {
@@ -17,10 +18,10 @@ namespace Logica
 		public static string excelPath;
 		public static string planilha = "Planilha1";
 
-		public static int planFirstLine = 3;
+		public static int planFirstLine = 2;
 		public static int planLastLine;
-		public static int planActualLine = 3;
-		public static int firstColumn = 1;
+		public static int planActualLine = 2;
+		public static int firstColumn = 2;
 
 		public static int linhaCorte;
 
@@ -214,6 +215,7 @@ namespace Logica
 				using (File.Create(filePath)) { };
 				excelPath = filePath;
 				AdicionaPlanilha("Planilha1");
+				PersonalizaPlanilha();
 			}
 			catch (Exception ex)
 			{
@@ -257,6 +259,31 @@ namespace Logica
 			catch (Exception ex)
 			{
 				throw new Exception($"Ocorreu um erro no método VerificaNomePlanilha. \r\nErro: {ex.Message}");
+			}
+		}
+
+		public void PersonalizaPlanilha()
+		{
+			try
+			{
+				pasta = app.Workbooks.Open(excelPath);
+				plan = pasta.Worksheets[planilha];
+
+				for (char col = 'C'; col <= 'J'; col++)
+				{
+					string columnName = col.ToString();
+					plan.Columns[columnName].ColumnWidth = 16;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"Ocorreu um erro no método PersonalizaPlanilha.\r\nErro: {ex.Message}");
+			}
+			finally
+			{
+				pasta.Save();
+				pasta.Close(true);
+				app.Quit();
 			}
 		}
 	}

@@ -57,6 +57,7 @@
 			toolStripSeparator3 = new ToolStripSeparator();
 			btnConfiguracoes = new ToolStripButton();
 			toolStripSeparator2 = new ToolStripSeparator();
+			btnGerar = new Button();
 			tsFerramentas.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -316,12 +317,24 @@
 			toolStripSeparator2.Name = "toolStripSeparator2";
 			toolStripSeparator2.Size = new Size(6, 54);
 			// 
+			// btnGerar
+			// 
+			btnGerar.BackColor = Color.MidnightBlue;
+			btnGerar.Location = new Point(547, 162);
+			btnGerar.Name = "btnGerar";
+			btnGerar.Size = new Size(107, 36);
+			btnGerar.TabIndex = 11;
+			btnGerar.Text = "Gerar dados";
+			btnGerar.UseVisualStyleBackColor = false;
+			btnGerar.Click += btnGerar_Click;
+			// 
 			// frmPrincipal
 			// 
 			AcceptButton = btnSalvar;
 			AutoScaleMode = AutoScaleMode.None;
 			BackColor = Color.DodgerBlue;
 			ClientSize = new Size(739, 517);
+			Controls.Add(btnGerar);
 			Controls.Add(tsFerramentas);
 			Controls.Add(btnSalvar);
 			Controls.Add(cdSexo);
@@ -391,5 +404,6 @@
 		private ToolStripButton btnConfiguracoes;
 		private ToolStripSeparator toolStripSeparator3;
 		private ToolStripSeparator toolStripSeparator2;
+		private Button btnGerar;
 	}
 }

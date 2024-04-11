@@ -116,5 +116,19 @@ namespace TrabalhandoComCSV
 			var config = new frmConfiguracoes();
 			config.ShowDialog();
 		}
+
+		private void btnGerar_Click(object sender, EventArgs e)
+		{
+			tbId.Text = "1";
+			mtbCpf.Text = "123.456.789-09";
+			tbNome.Text = "João Oliveira de Souza";
+			tbBairro.Text = "Sé";
+			tbMunicipio.Text = "São Paulo";
+			tbEstado.Text = "SP";
+			tbEndereco.Text = "Praça da Sé";
+			mtbCep.Text = "01001-000";
+			mtbNumero.Text = "(11) 12345-6789";
+			cdSexo.SelectedIndex = 0;
+		}
 	}
 }
